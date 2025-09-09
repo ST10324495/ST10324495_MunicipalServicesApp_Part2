@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|c:\\users\\danie\\source\\repos\\st10323395_municipalservicesapp\\st10323395_municipalservicesapp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Form1.cs",
+              "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Form1.cs",
+              "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Form1.cs [Design]",
+              "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T17:53:42.659Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

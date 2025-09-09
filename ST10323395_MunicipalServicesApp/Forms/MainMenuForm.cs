@@ -1,0 +1,371 @@
+using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Windows.Forms;
+
+namespace ST10323395_MunicipalServicesApp
+{
+    [System.ComponentModel.DesignerCategory("Code")]
+    public class MainMenuForm : Form
+    {
+        // Layout
+        private Panel topBar;
+        private Panel leftNav;
+        private Panel contentHost;
+
+        // Window buttons
+        private Button btnClose;
+        private Button btnMin;
+        private FlowLayoutPanel windowBtnBar;
+
+        // Title chip
+        private Label lblTitleChip;
+
+        // Nav
+        private Button btnReportIssues, btnLocalEvents, btnServiceStatus;
+
+        // Theme
+        private readonly Color Primary = Color.FromArgb(33, 150, 243);
+        private readonly Color PrimaryDark = Color.FromArgb(25, 118, 210);
+        private readonly Color PageBg = Color.FromArgb(210, 215, 220);
+        private readonly Color NavBg = Color.FromArgb(45, 53, 70);
+        private readonly Color NavItem = Color.FromArgb(59, 70, 92);
+        private readonly Color NavHover = Color.FromArgb(80, 96, 128);
+        private readonly Color NavDown = Color.FromArgb(70, 86, 115);
+        private readonly Color NavActive = Color.FromArgb(77, 182, 172);
+        private readonly Color CardBorder = Color.FromArgb(230, 234, 238);
+
+        public MainMenuForm()
+        {
+            InitializeComponent();
+
+            // Keep chip aligned as things resize
+            leftNav.SizeChanged += (s, e) => RealignTitleChip();
+            topBar.SizeChanged += (s, e) => RealignTitleChip();
+            RealignTitleChip();
+
+            lblTitleChip.Text = string.Empty;
+        }
+
+        private void InitializeComponent()
+        {
+            // DPI scaling
+            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleDimensions = new SizeF(96f, 96f);
+
+            // Form
+            Text = "Municipal Services App";
+            StartPosition = FormStartPosition.CenterScreen;
+            Size = new Size(1180, 760);
+            MinimumSize = new Size(1000, 680);
+            FormBorderStyle = FormBorderStyle.None;
+            BackColor = PageBg;
+            DoubleBuffered = true;
+
+            // ===== Top bar =====
+            topBar = new Panel { Dock = DockStyle.Top, Height = 64 };
+            topBar.Paint += TopBar_Paint;
+            topBar.MouseDown += TopBar_MouseDown; // drag window
+            Controls.Add(topBar);
+
+            // Title chip
+            lblTitleChip = new Label
+            {
+                AutoSize = true,
+                Text = "REPORT ISSUES",
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI Semibold", 11.5f, FontStyle.Bold),
+                Padding = new Padding(12, 6, 12, 6),
+                BackColor = Color.Transparent
+            };
+            lblTitleChip.Paint += TitleChip_Paint;
+            topBar.Controls.Add(lblTitleChip);
+
+            // Window buttons (colored)
+            btnMin = MakeTopButton("—");  // uses overload to pick colors
+            btnMin.Click += (s, e) => WindowState = FormWindowState.Minimized;
+
+            btnClose = MakeTopButton("×");
+            btnClose.Click += (s, e) => Close();
+
+            windowBtnBar = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Right,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                Margin = new Padding(0),
+                Padding = new Padding(0),
+                AutoSize = true,
+                Height = topBar.Height
+            };
+            windowBtnBar.Controls.Add(btnMin);
+            windowBtnBar.Controls.Add(btnClose);
+            topBar.Controls.Add(windowBtnBar);
+
+            // vertically center the small buttons on resize
+            topBar.Resize += (s, e) =>
+            {
+                foreach (Control c in windowBtnBar.Controls)
+                    c.Top = (topBar.Height - c.Height) / 2;
+            };
+
+            // ===== Left nav =====
+            leftNav = new Panel { Dock = DockStyle.Left, Width = 230, BackColor = NavBg };
+            Controls.Add(leftNav);
+
+            var navStack = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true,
+                Padding = new Padding(12, 18, 12, 12),
+            };
+            leftNav.Controls.Add(navStack);
+
+            btnReportIssues = MakeNavButton("  Report Issues");
+            btnLocalEvents = MakeNavButton("  Local Events and Announcements");
+            btnServiceStatus = MakeNavButton("  Service Request Status");
+
+            // Part 1: lock future features
+            btnLocalEvents.Enabled = false;
+            btnServiceStatus.Enabled = false;
+            btnLocalEvents.BackColor = NavItem;
+            btnServiceStatus.BackColor = NavItem;
+
+            btnReportIssues.Click += (s, e) =>
+            {
+                ActivateNav(btnReportIssues, "Report Issues");
+                OpenReportIssuePage();
+            };
+            btnLocalEvents.Click += (s, e) =>
+            {
+                ActivateNav(btnLocalEvents, "Local Events");
+                ShowPlaceholder("This section will be implemented later.");
+            };
+            btnServiceStatus.Click += (s, e) =>
+            {
+                ActivateNav(btnServiceStatus, "Service Status");
+                ShowPlaceholder("This section will be implemented later.");
+            };
+
+            navStack.Controls.Add(btnReportIssues);
+            navStack.Controls.Add(btnLocalEvents);
+            navStack.Controls.Add(btnServiceStatus);
+
+            // ===== Content host =====
+            contentHost = new Panel { Dock = DockStyle.Fill, BackColor = Color.White };
+            contentHost.Paint += ContentHost_PaintBorder; // clean 1px border only
+            Controls.Add(contentHost);
+            contentHost.BringToFront();
+        }
+
+        // --------- Factories ---------
+        // Color-picking overload for convenience: "—" gets blue; "×" gets red.
+        private Button MakeTopButton(string text)
+        {
+            bool close = text.Trim() == "×" || text.Trim().ToLower() == "x";
+            Color baseColor = close ? Color.FromArgb(231, 76, 60) : Color.FromArgb(52, 152, 219);
+            Color hoverColor = close ? Color.FromArgb(192, 57, 43) : Color.FromArgb(41, 128, 185);
+            Color downColor = close ? Color.FromArgb(169, 50, 38) : Color.FromArgb(31, 97, 141);
+            return MakeTopButton(text, baseColor, hoverColor, downColor);
+        }
+
+        private Button MakeTopButton(string text, Color baseColor, Color hoverColor, Color downColor)
+        {
+            var b = new Button
+            {
+                Text = text,
+                Width = 48,
+                Height = 32,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = baseColor,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 12f, FontStyle.Bold),
+                TabStop = false,
+                Margin = new Padding(0),
+                Padding = new Padding(0)
+            };
+            b.FlatAppearance.BorderSize = 0;
+            b.MouseEnter += (s, e) => b.BackColor = hoverColor;
+            b.MouseLeave += (s, e) => b.BackColor = baseColor;
+            b.MouseDown += (s, e) => { if (e.Button == MouseButtons.Left) b.BackColor = downColor; };
+            return b;
+        }
+
+        private Button MakeNavButton(string text)
+        {
+            var b = new Button
+            {
+                Text = text,
+                Width = 196,
+                Height = 44,
+                Margin = new Padding(0, 6, 0, 0),
+                TextAlign = ContentAlignment.MiddleLeft,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10f, FontStyle.Regular),
+                ForeColor = Color.White,
+                BackColor = NavItem,
+                TabStop = false
+            };
+            b.FlatAppearance.BorderSize = 0;
+            b.FlatAppearance.MouseOverBackColor = NavHover;
+            b.FlatAppearance.MouseDownBackColor = NavDown;
+            return b;
+        }
+
+        // --------- Nav / Pages ---------
+        private void ActivateNav(Button target, string pageTitle)
+        {
+            foreach (Control c in leftNav.Controls)
+            {
+                if (c is FlowLayoutPanel fp)
+                {
+                    foreach (Control cc in fp.Controls)
+                        if (cc is Button b) b.BackColor = NavItem;
+                }
+            }
+            if (target.Enabled) target.BackColor = NavActive;
+
+            lblTitleChip.Text = pageTitle.ToUpperInvariant();
+            lblTitleChip.Invalidate();
+            RealignTitleChip();
+        }
+
+        private void ShowPlaceholder(string message)
+        {
+            contentHost.Controls.Clear();
+
+            var panel = new Panel { Dock = DockStyle.Fill, BackColor = Color.White, Padding = new Padding(24) };
+            panel.Paint += ContentCardBorder;
+            var lbl = new Label
+            {
+                Text = message,
+                AutoSize = true,
+                Font = new Font("Segoe UI", 12f),
+                ForeColor = Color.FromArgb(70, 80, 95),
+                Left = 24,
+                Top = 24
+            };
+            panel.Controls.Add(lbl);
+            contentHost.Controls.Add(panel);
+        }
+
+        private void OpenReportIssuePage()
+        {
+            contentHost.Controls.Clear();
+            var page = new ReportIssueForm
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            contentHost.Controls.Add(page);
+            page.Show();
+        }
+
+        private void RealignTitleChip()
+        {
+            int navWidth = leftNav?.Width ?? 230;
+            lblTitleChip.Left = navWidth + 24;
+            lblTitleChip.Top = Math.Max(0, (topBar.Height - lblTitleChip.Height) / 2);
+        }
+
+        // --------- Painting ---------
+        private void TopBar_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            Rectangle r = topBar.ClientRectangle;
+
+            using (var lg = new LinearGradientBrush(r, Primary, PrimaryDark, 0f))
+                g.FillRectangle(lg, r);
+
+            // top gloss
+            var gloss = new Rectangle(r.X, r.Y, r.Width, r.Height / 2 + 1);
+            using (var glossBrush = new LinearGradientBrush(gloss,
+                Color.FromArgb(80, Color.White), Color.FromArgb(0, Color.White),
+                LinearGradientMode.Vertical))
+            {
+                g.FillRectangle(glossBrush, gloss);
+            }
+
+            // bottom soft shadow
+            var shadow = new Rectangle(r.X, r.Bottom - 7, r.Width, 7);
+            using (var sh = new LinearGradientBrush(shadow,
+                Color.FromArgb(120, 0, 0, 0), Color.FromArgb(0, 0, 0, 0),
+                LinearGradientMode.Vertical))
+            {
+                g.FillRectangle(sh, shadow);
+            }
+
+            // 1px bottom highlight
+            using (var pen = new Pen(Color.FromArgb(40, Color.White)))
+                g.DrawLine(pen, r.X, r.Bottom - 1, r.Right, r.Bottom - 1);
+        }
+
+        private void TitleChip_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            var lbl = (Label)sender;
+            var rect = new Rectangle(0, 0, lbl.Width - 1, lbl.Height - 1);
+
+            using (var path = Rounded(rect, 10))
+            using (var b = new SolidBrush(Color.FromArgb(42, 255, 255, 255)))
+            using (var p = new Pen(Color.FromArgb(80, 255, 255, 255)))
+            {
+                g.FillPath(b, path);
+                g.DrawPath(p, path);
+            }
+        }
+
+        // Clean, simple 1px border (no vignette)
+        private void ContentHost_PaintBorder(object sender, PaintEventArgs e)
+        {
+            var r = contentHost.ClientRectangle;
+            r.Width -= 1; r.Height -= 1;
+            using (var pen = new Pen(CardBorder))
+                e.Graphics.DrawRectangle(pen, r);
+        }
+
+        private void ContentCardBorder(object sender, PaintEventArgs e)
+        {
+            var pnl = (Panel)sender;
+            var r = pnl.ClientRectangle; r.Width -= 1; r.Height -= 1;
+            using (var pen = new Pen(CardBorder))
+                e.Graphics.DrawRectangle(pen, r);
+        }
+
+        // --------- Window dragging ---------
+        private void TopBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) NativeDrag();
+        }
+
+        private void NativeDrag()
+        {
+            Capture = false;
+            Message m = Message.Create(Handle, 0xA1, new IntPtr(2), IntPtr.Zero); // HTCAPTION
+            WndProc(ref m);
+        }
+
+        // --------- Utils ---------
+        private static GraphicsPath Rounded(Rectangle r, int radius)
+        {
+            int d = radius * 2;
+            var path = new GraphicsPath();
+            path.AddArc(r.X, r.Y, d, d, 180, 90);
+            path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
+            path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
+            path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+    }
+}
