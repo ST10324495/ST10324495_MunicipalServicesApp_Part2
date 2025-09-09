@@ -8,7 +8,7 @@ namespace ST10323395_MunicipalServicesApp
 {
     public class ReportIssueForm : Form
     {
-        // Color scheme matching MainMenuForm for consistency
+        // Application color scheme
         private readonly Color Primary = Color.FromArgb(33, 150, 243);
         private readonly Color PrimaryDark = Color.FromArgb(25, 118, 210);
         private readonly Color AccentGreen = Color.FromArgb(46, 204, 113);
@@ -19,25 +19,25 @@ namespace ST10323395_MunicipalServicesApp
         private readonly Color CardBorder = Color.FromArgb(230, 234, 238);
 
         // Form layout components
-        private TableLayoutPanel root;       // Centers the main card
-        private Panel card;                  // White content panel with border
-        private TableLayoutPanel stack;      // Vertical content layout
+        private TableLayoutPanel root;
+        private Panel card;
+        private TableLayoutPanel stack;
 
         // Form title
         private Label lblTitle;
 
-        // Progress tracking for user engagement
+        // Progress tracking components
         private Panel progressTrack;
         private Panel progressFill;
         private Label lblEngagement;
 
-        // Location and category input fields
+        // Input field components
         private TableLayoutPanel lcGrid;
         private Label lblLocation, lblCategory;
         private TextBox txtLocation;
         private ComboBox cmbCategory;
 
-        // Description input area
+        // Description input
         private TableLayoutPanel descRow;
         private Label lblDescription;
         private RichTextBox rtbDescription;
@@ -54,7 +54,7 @@ namespace ST10323395_MunicipalServicesApp
 
         private OpenFileDialog openFileDialog;
 
-        // Gamification messages to encourage form completion
+        // Progress encouragement messages
         private readonly string[] encouragementMessages = {
             "Great start! Keep going!",
             "You're making progress!",
@@ -67,22 +67,22 @@ namespace ST10323395_MunicipalServicesApp
         {
             InitializeComponent();
             SetupForm();
-            UpdateEngagement();  // Initialize progress tracking
+            UpdateEngagement();
         }
 
         private void InitializeComponent()
         {
             SuspendLayout();
 
-            // Configure form as embedded child control
+            // Configure form properties
             Text = "Report Issue - Municipal Services";
             StartPosition = FormStartPosition.CenterParent;
             BackColor = PageBg;
             Font = new Font("Segoe UI", 9F);
-            Dock = DockStyle.Fill;           // Fill parent container
+            Dock = DockStyle.Fill;
             FormBorderStyle = FormBorderStyle.None;
 
-            // Root container to center the main card
+            // Create centered layout container
             root = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -98,7 +98,7 @@ namespace ST10323395_MunicipalServicesApp
             root.RowStyles.Add(new RowStyle(SizeType.Absolute, 12F));
             Controls.Add(root);
 
-            // Main content card with custom border
+            // Create main content card
             card = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -106,11 +106,11 @@ namespace ST10323395_MunicipalServicesApp
                 Padding = new Padding(28),
                 AutoScroll = false
             };
-            card.Paint += Card_Paint;        // Custom border painting
-            EnableDoubleBuffer(card);        // Smooth rendering
+            card.Paint += Card_Paint;
+            EnableDoubleBuffer(card);
             root.Controls.Add(card, 1, 1);
 
-            // Vertical content layout
+            // Create vertical content layout
             stack = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -118,15 +118,15 @@ namespace ST10323395_MunicipalServicesApp
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
             };
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Title
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Progress
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Location/Category
-            stack.RowStyles.Add(new RowStyle(SizeType.Absolute, 160)); // Description
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Attachment
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Buttons
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            stack.RowStyles.Add(new RowStyle(SizeType.Absolute, 160));
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             card.Controls.Add(stack);
 
-            // Form title
+            // Create form title
             lblTitle = new Label
             {
                 Text = "Report an Issue",
@@ -139,7 +139,7 @@ namespace ST10323395_MunicipalServicesApp
             };
             stack.Controls.Add(lblTitle);
 
-            // Progress tracking for user engagement
+            // Create progress tracking section
             var progressBlock = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -148,7 +148,7 @@ namespace ST10323395_MunicipalServicesApp
                 Margin = new Padding(0, 0, 0, 18)
             };
 
-            // Progress bar track
+            // Create progress bar
             progressTrack = new Panel
             {
                 Height = 16,
@@ -156,7 +156,6 @@ namespace ST10323395_MunicipalServicesApp
                 BackColor = Color.FromArgb(230, 230, 230),
                 Margin = new Padding(0, 0, 0, 8)
             };
-            // Progress fill indicator
             progressFill = new Panel
             {
                 Height = 16,
@@ -165,7 +164,7 @@ namespace ST10323395_MunicipalServicesApp
             };
             progressTrack.Controls.Add(progressFill);
 
-            // Encouragement message
+            // Create progress message label
             lblEngagement = new Label
             {
                 Text = "Complete the form to see your progress!",
@@ -179,7 +178,7 @@ namespace ST10323395_MunicipalServicesApp
             progressBlock.Controls.Add(lblEngagement, 0, 1);
             stack.Controls.Add(progressBlock);
 
-            // Location and category input grid
+            // Create location and category input section
             lcGrid = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -218,7 +217,7 @@ namespace ST10323395_MunicipalServicesApp
             lcGrid.Controls.Add(cmbCategory, 1, 1);
             stack.Controls.Add(lcGrid);
 
-            // Description input area
+            // Create description input section
             descRow = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -313,7 +312,7 @@ namespace ST10323395_MunicipalServicesApp
             ResumeLayout(false);
         }
 
-        // Helper methods for UI creation and optimization
+        // UI helper methods
         private static void EnableDoubleBuffer(Control c)
         {
             // Enable double buffering for smooth rendering
@@ -338,7 +337,7 @@ namespace ST10323395_MunicipalServicesApp
 
         private Button MakeButton(string text, Color color)
         {
-            // Create consistent action buttons with hover effects
+            // Create consistent action buttons
             var b = new Button
             {
                 Text = text,
@@ -351,44 +350,43 @@ namespace ST10323395_MunicipalServicesApp
                 Margin = new Padding(6)
             };
             b.FlatAppearance.BorderSize = 0;
-            // Hover effects for better user feedback
+            // Add hover effects
             b.MouseEnter += delegate { if (b.Enabled) b.BackColor = ControlPaint.Light(color); };
             b.MouseLeave += delegate { if (b.Enabled) b.BackColor = color; };
             return b;
         }
 
-        //List of Category
+        // Initialize form with category options
         private void SetupForm()
         {
             cmbCategory.Items.AddRange(new[]
             {
-                //List of Available Category
-        "Sanitation",
-        "Roads",
-        "Potholes",
-        "Street Lighting",
-        "Water & Sewage",
-        "Electricity / Power",
-        "Waste Collection",
-        "Illegal Dumping",
-        "Parks & Recreation",
-        "Noise Complaint",
-        "Animal Control",
-        "Public Safety",
-        "Graffiti & Vandalism",
-        "Traffic Signals & Signage",
-        "Public Transport",
-        "Tree / Vegetation",
-        "Flooding / Stormwater",
-        "Parking",
-        "Utilities",
-        "Other"
-    });
+                "Sanitation",
+                "Roads",
+                "Potholes",
+                "Street Lighting",
+                "Water & Sewage",
+                "Electricity / Power",
+                "Waste Collection",
+                "Illegal Dumping",
+                "Parks & Recreation",
+                "Noise Complaint",
+                "Animal Control",
+                "Public Safety",
+                "Graffiti & Vandalism",
+                "Traffic Signals & Signage",
+                "Public Transport",
+                "Tree / Vegetation",
+                "Flooding / Stormwater",
+                "Parking",
+                "Utilities",
+                "Other"
+            });
             txtAttachment.Text = string.Empty;
         }
 
 
-        // Progress tracking and gamification system
+        // Progress tracking system
         private void UpdateEngagement()
         {
             // Count completed required fields
@@ -402,7 +400,7 @@ namespace ST10323395_MunicipalServicesApp
             int trackWidth = Math.Max(0, progressTrack.ClientSize.Width);
             progressFill.Width = (int)(trackWidth * (percent / 100.0));
 
-            // Update encouragement message based on progress
+            // Update encouragement message
             if (completed == 0)
             {
                 lblEngagement.Text = "Complete the form to see your progress!";
@@ -419,17 +417,17 @@ namespace ST10323395_MunicipalServicesApp
                 lblEngagement.ForeColor = Color.FromArgb(39, 174, 96);
             }
 
-            // Enable submit button only when form is complete
+            // Enable submit button when form is complete
             btnSubmit.Enabled = completed == 3;
         }
 
-        // File attachment with size validation
+        // Handle file attachment selection
         private void BtnAttachMedia_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var f = new FileInfo(openFileDialog.FileName);
-                // Enforce 10MB file size limit
+                // Check file size limit
                 if (f.Length > 10 * 1024 * 1024)
                 {
                     MessageBox.Show("File must be smaller than 10MB.", "File Too Large",
@@ -437,14 +435,14 @@ namespace ST10323395_MunicipalServicesApp
                     return;
                 }
 
-                // Update UI to show selected file
+                // Update UI with selected file
                 txtAttachment.Text = openFileDialog.FileName;
                 btnAttachMedia.Text = "Change File";
                 btnAttachMedia.BackColor = AccentGreen;
             }
         }
 
-        // Form submission and data persistence
+        // Handle form submission
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
             // Validate required fields
@@ -466,7 +464,7 @@ namespace ST10323395_MunicipalServicesApp
 
             IssueRepository.Items.Add(issue);
 
-            // Show success confirmation
+            // Show success message
             MessageBox.Show(
                 "Issue reported successfully!\n\n" +
                 "Location: " + issue.Location + "\n" +
@@ -485,10 +483,9 @@ namespace ST10323395_MunicipalServicesApp
             UpdateEngagement();
         }
 
-        // Custom painting for card border
+        // Draw card border
         private void Card_Paint(object sender, PaintEventArgs e)
         {
-            // Draw subtle border around main content card
             var r = card.ClientRectangle;
             r.Width -= 1; r.Height -= 1;
             using (var pen = new Pen(CardBorder))

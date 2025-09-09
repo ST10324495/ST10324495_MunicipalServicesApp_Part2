@@ -9,23 +9,23 @@ namespace ST10323395_MunicipalServicesApp
     [System.ComponentModel.DesignerCategory("Code")]
     public class MainMenuForm : Form
     {
-        // Layout
+        // UI Layout components
         private Panel topBar;
         private Panel leftNav;
         private Panel contentHost;
 
-        // Window buttons
+        // Window control buttons
         private Button btnClose;
         private Button btnMin;
         private FlowLayoutPanel windowBtnBar;
 
-        // Title chip
+        // Page title display
         private Label lblTitleChip;
 
-        // Nav
+        // Navigation buttons
         private Button btnReportIssues, btnLocalEvents, btnServiceStatus;
 
-        // Theme
+        // Color scheme
         private readonly Color Primary = Color.FromArgb(33, 150, 243);
         private readonly Color PrimaryDark = Color.FromArgb(25, 118, 210);
         private readonly Color PageBg = Color.FromArgb(210, 215, 220);
@@ -40,7 +40,7 @@ namespace ST10323395_MunicipalServicesApp
         {
             InitializeComponent();
 
-            // Keep chip aligned as things resize
+            // Maintain title chip position during resize
             leftNav.SizeChanged += (s, e) => RealignTitleChip();
             topBar.SizeChanged += (s, e) => RealignTitleChip();
             RealignTitleChip();
@@ -50,11 +50,11 @@ namespace ST10323395_MunicipalServicesApp
 
         private void InitializeComponent()
         {
-            // DPI scaling
+            // Configure form scaling and appearance
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoScaleDimensions = new SizeF(96f, 96f);
 
-            // Form
+            // Set form properties
             Text = "Municipal Services App";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1180, 760);
@@ -63,13 +63,13 @@ namespace ST10323395_MunicipalServicesApp
             BackColor = PageBg;
             DoubleBuffered = true;
 
-            // ===== Top bar =====
+            // Create top navigation bar
             topBar = new Panel { Dock = DockStyle.Top, Height = 64 };
             topBar.Paint += TopBar_Paint;
-            topBar.MouseDown += TopBar_MouseDown; // drag window
+            topBar.MouseDown += TopBar_MouseDown;
             Controls.Add(topBar);
 
-            // Title chip
+            // Create page title display
             lblTitleChip = new Label
             {
                 AutoSize = true,
@@ -82,13 +82,14 @@ namespace ST10323395_MunicipalServicesApp
             lblTitleChip.Paint += TitleChip_Paint;
             topBar.Controls.Add(lblTitleChip);
 
-            // Window buttons (colored)
-            btnMin = MakeTopButton("—");  // uses overload to pick colors
+            // Create window control buttons
+            btnMin = MakeTopButton("—");
             btnMin.Click += (s, e) => WindowState = FormWindowState.Minimized;
 
             btnClose = MakeTopButton("×");
             btnClose.Click += (s, e) => Close();
 
+            // Create button container
             windowBtnBar = new FlowLayoutPanel
             {
                 Dock = DockStyle.Right,
@@ -103,17 +104,18 @@ namespace ST10323395_MunicipalServicesApp
             windowBtnBar.Controls.Add(btnClose);
             topBar.Controls.Add(windowBtnBar);
 
-            // vertically center the small buttons on resize
+            // Center buttons vertically when resizing
             topBar.Resize += (s, e) =>
             {
                 foreach (Control c in windowBtnBar.Controls)
                     c.Top = (topBar.Height - c.Height) / 2;
             };
 
-            // ===== Left nav =====
+            // Create left navigation panel
             leftNav = new Panel { Dock = DockStyle.Left, Width = 230, BackColor = NavBg };
             Controls.Add(leftNav);
 
+            // Create navigation button container
             var navStack = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -124,16 +126,18 @@ namespace ST10323395_MunicipalServicesApp
             };
             leftNav.Controls.Add(navStack);
 
+            // Create navigation buttons
             btnReportIssues = MakeNavButton("  Report Issues");
             btnLocalEvents = MakeNavButton("  Local Events and Announcements");
             btnServiceStatus = MakeNavButton("  Service Request Status");
 
-            // Part 1: lock future features
+            // Disable future features for Part 1
             btnLocalEvents.Enabled = false;
             btnServiceStatus.Enabled = false;
             btnLocalEvents.BackColor = NavItem;
             btnServiceStatus.BackColor = NavItem;
 
+            // Set up button click events
             btnReportIssues.Click += (s, e) =>
             {
                 ActivateNav(btnReportIssues, "Report Issues");
@@ -150,19 +154,20 @@ namespace ST10323395_MunicipalServicesApp
                 ShowPlaceholder("This section will be implemented later.");
             };
 
+            // Add buttons to navigation
             navStack.Controls.Add(btnReportIssues);
             navStack.Controls.Add(btnLocalEvents);
             navStack.Controls.Add(btnServiceStatus);
 
-            // ===== Content host =====
+            // Create main content area
             contentHost = new Panel { Dock = DockStyle.Fill, BackColor = Color.White };
-            contentHost.Paint += ContentHost_PaintBorder; // clean 1px border only
+            contentHost.Paint += ContentHost_PaintBorder;
             Controls.Add(contentHost);
             contentHost.BringToFront();
         }
 
-        // --------- Factories ---------
-        // Color-picking overload for convenience: "—" gets blue; "×" gets red.
+        // Button creation methods
+        // Automatically assigns colors based on button type
         private Button MakeTopButton(string text)
         {
             bool close = text.Trim() == "×" || text.Trim().ToLower() == "x";
@@ -215,9 +220,10 @@ namespace ST10323395_MunicipalServicesApp
             return b;
         }
 
-        // --------- Nav / Pages ---------
+        // Navigation and page management
         private void ActivateNav(Button target, string pageTitle)
         {
+            // Reset all navigation buttons to default color
             foreach (Control c in leftNav.Controls)
             {
                 if (c is FlowLayoutPanel fp)
@@ -226,13 +232,16 @@ namespace ST10323395_MunicipalServicesApp
                         if (cc is Button b) b.BackColor = NavItem;
                 }
             }
+            // Highlight active button
             if (target.Enabled) target.BackColor = NavActive;
 
+            // Update page title
             lblTitleChip.Text = pageTitle.ToUpperInvariant();
             lblTitleChip.Invalidate();
             RealignTitleChip();
         }
 
+        // Display placeholder message for disabled features
         private void ShowPlaceholder(string message)
         {
             contentHost.Controls.Clear();
@@ -252,6 +261,7 @@ namespace ST10323395_MunicipalServicesApp
             contentHost.Controls.Add(panel);
         }
 
+        // Open the issue reporting form
         private void OpenReportIssuePage()
         {
             contentHost.Controls.Clear();
@@ -265,6 +275,7 @@ namespace ST10323395_MunicipalServicesApp
             page.Show();
         }
 
+        // Position title chip based on navigation width
         private void RealignTitleChip()
         {
             int navWidth = leftNav?.Width ?? 230;
@@ -272,7 +283,7 @@ namespace ST10323395_MunicipalServicesApp
             lblTitleChip.Top = Math.Max(0, (topBar.Height - lblTitleChip.Height) / 2);
         }
 
-        // --------- Painting ---------
+        // Custom painting methods
         private void TopBar_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -284,7 +295,7 @@ namespace ST10323395_MunicipalServicesApp
             using (var lg = new LinearGradientBrush(r, Primary, PrimaryDark, 0f))
                 g.FillRectangle(lg, r);
 
-            // top gloss
+            // Add top highlight effect
             var gloss = new Rectangle(r.X, r.Y, r.Width, r.Height / 2 + 1);
             using (var glossBrush = new LinearGradientBrush(gloss,
                 Color.FromArgb(80, Color.White), Color.FromArgb(0, Color.White),
@@ -293,7 +304,7 @@ namespace ST10323395_MunicipalServicesApp
                 g.FillRectangle(glossBrush, gloss);
             }
 
-            // bottom soft shadow
+            // Add bottom shadow
             var shadow = new Rectangle(r.X, r.Bottom - 7, r.Width, 7);
             using (var sh = new LinearGradientBrush(shadow,
                 Color.FromArgb(120, 0, 0, 0), Color.FromArgb(0, 0, 0, 0),
@@ -302,7 +313,7 @@ namespace ST10323395_MunicipalServicesApp
                 g.FillRectangle(sh, shadow);
             }
 
-            // 1px bottom highlight
+            // Add bottom highlight line
             using (var pen = new Pen(Color.FromArgb(40, Color.White)))
                 g.DrawLine(pen, r.X, r.Bottom - 1, r.Right, r.Bottom - 1);
         }
@@ -325,7 +336,7 @@ namespace ST10323395_MunicipalServicesApp
             }
         }
 
-        // Clean, simple 1px border (no vignette)
+        // Draw content area border
         private void ContentHost_PaintBorder(object sender, PaintEventArgs e)
         {
             var r = contentHost.ClientRectangle;
@@ -334,6 +345,7 @@ namespace ST10323395_MunicipalServicesApp
                 e.Graphics.DrawRectangle(pen, r);
         }
 
+        // Draw panel border
         private void ContentCardBorder(object sender, PaintEventArgs e)
         {
             var pnl = (Panel)sender;
@@ -342,20 +354,21 @@ namespace ST10323395_MunicipalServicesApp
                 e.Graphics.DrawRectangle(pen, r);
         }
 
-        // --------- Window dragging ---------
+        // Window dragging functionality
         private void TopBar_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left) NativeDrag();
         }
 
+        // Enable window dragging by title bar
         private void NativeDrag()
         {
             Capture = false;
-            Message m = Message.Create(Handle, 0xA1, new IntPtr(2), IntPtr.Zero); // HTCAPTION
+            Message m = Message.Create(Handle, 0xA1, new IntPtr(2), IntPtr.Zero);
             WndProc(ref m);
         }
 
-        // --------- Utils ---------
+        // Utility methods
         private static GraphicsPath Rounded(Rectangle r, int radius)
         {
             int d = radius * 2;
