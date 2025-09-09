@@ -221,6 +221,6 @@ For detailed technical specifications, API documentation, and implementation gui
 
 ---
 
-**Student ID**: ST10323395  
-**Course**: PROG7312  
+**Student Number**: ST10324495 
+**Course**: PROG7312 POE
 **Portfolio Part**: 1  
