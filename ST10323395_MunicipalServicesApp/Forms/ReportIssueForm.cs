@@ -54,7 +54,7 @@ namespace ST10323395_MunicipalServicesApp
 
         private OpenFileDialog openFileDialog;
 
-        // Progress encouragement messages
+        // Progress encouragement messages (Gamification)
         private readonly string[] encouragementMessages = {
             "Great start! Keep going!",
             "You're making progress!",
