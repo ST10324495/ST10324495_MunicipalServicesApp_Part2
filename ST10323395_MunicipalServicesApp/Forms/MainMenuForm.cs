@@ -14,16 +14,12 @@ namespace ST10323395_MunicipalServicesApp
         private Panel leftNav;
         private Panel contentHost;
 
-        // Window control buttons
-        private Button btnClose;
-        private Button btnMin;
-        private FlowLayoutPanel windowBtnBar;
 
         // Page title display
         private Label lblTitleChip;
 
         // Navigation buttons
-        private Button btnReportIssues, btnLocalEvents, btnServiceStatus;
+        private Button btnReportIssues, btnViewIssues, btnLocalEvents, btnServiceStatus, btnExit;
 
         // Color scheme
         private readonly Color Primary = Color.FromArgb(33, 150, 243);
@@ -59,14 +55,13 @@ namespace ST10323395_MunicipalServicesApp
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1180, 760);
             MinimumSize = new Size(1000, 680);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.Sizable;
             BackColor = PageBg;
             DoubleBuffered = true;
 
             // Create top navigation bar
-            topBar = new Panel { Dock = DockStyle.Top, Height = 64 };
+            topBar = new Panel { Dock = DockStyle.Top, Height = 64, MinimumSize = new Size(0, 64) };
             topBar.Paint += TopBar_Paint;
-            topBar.MouseDown += TopBar_MouseDown;
             Controls.Add(topBar);
 
             // Create page title display
@@ -77,42 +72,14 @@ namespace ST10323395_MunicipalServicesApp
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI Semibold", 11.5f, FontStyle.Bold),
                 Padding = new Padding(12, 6, 12, 6),
-                BackColor = Color.Transparent
+                BackColor = Color.Transparent,
+                Location = new Point(24, 16)
             };
             lblTitleChip.Paint += TitleChip_Paint;
             topBar.Controls.Add(lblTitleChip);
 
-            // Create window control buttons
-            btnMin = MakeTopButton("—");
-            btnMin.Click += (s, e) => WindowState = FormWindowState.Minimized;
-
-            btnClose = MakeTopButton("×");
-            btnClose.Click += (s, e) => Close();
-
-            // Create button container
-            windowBtnBar = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Right,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                Margin = new Padding(0),
-                Padding = new Padding(0),
-                AutoSize = true,
-                Height = topBar.Height
-            };
-            windowBtnBar.Controls.Add(btnMin);
-            windowBtnBar.Controls.Add(btnClose);
-            topBar.Controls.Add(windowBtnBar);
-
-            // Center buttons vertically when resizing
-            topBar.Resize += (s, e) =>
-            {
-                foreach (Control c in windowBtnBar.Controls)
-                    c.Top = (topBar.Height - c.Height) / 2;
-            };
-
             // Create left navigation panel
-            leftNav = new Panel { Dock = DockStyle.Left, Width = 230, BackColor = NavBg };
+            leftNav = new Panel { Dock = DockStyle.Left, Width = 230, BackColor = NavBg, MinimumSize = new Size(200, 0) };
             Controls.Add(leftNav);
 
             // Create navigation button container
@@ -128,14 +95,10 @@ namespace ST10323395_MunicipalServicesApp
 
             // Create navigation buttons
             btnReportIssues = MakeNavButton("  Report Issues");
-            btnLocalEvents = MakeNavButton("  Local Events and Announcements");
+            btnViewIssues = MakeNavButton("  View Reported Issues");
             btnServiceStatus = MakeNavButton("  Service Request Status");
-
-            // Disable future features for Part 1
-            btnLocalEvents.Enabled = false;
-            btnServiceStatus.Enabled = false;
-            btnLocalEvents.BackColor = NavItem;
-            btnServiceStatus.BackColor = NavItem;
+            btnLocalEvents = MakeNavButton("  Local Events and Announcements");
+            btnExit = MakeNavButton("  Exit Application");
 
             // Set up button click events
             btnReportIssues.Click += (s, e) =>
@@ -143,21 +106,37 @@ namespace ST10323395_MunicipalServicesApp
                 ActivateNav(btnReportIssues, "Report Issues");
                 OpenReportIssuePage();
             };
-            btnLocalEvents.Click += (s, e) =>
+            btnViewIssues.Click += (s, e) =>
             {
-                ActivateNav(btnLocalEvents, "Local Events");
-                ShowPlaceholder("This section will be implemented later.");
+                ActivateNav(btnViewIssues, "View Issues");
+                OpenViewIssuesPage();
             };
             btnServiceStatus.Click += (s, e) =>
             {
                 ActivateNav(btnServiceStatus, "Service Status");
-                ShowPlaceholder("This section will be implemented later.");
+                OpenServiceStatusPage();
+            };
+            btnLocalEvents.Click += (s, e) =>
+            {
+                ActivateNav(btnLocalEvents, "Local Events");
+                OpenLocalEventsPage();
+            };
+            btnExit.Click += (s, e) =>
+            {
+                var result = MessageBox.Show("Are you sure you want to exit the application?", "Exit Application",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
             };
 
             // Add buttons to navigation
             navStack.Controls.Add(btnReportIssues);
-            navStack.Controls.Add(btnLocalEvents);
+            navStack.Controls.Add(btnViewIssues);
             navStack.Controls.Add(btnServiceStatus);
+            navStack.Controls.Add(btnLocalEvents);
+            navStack.Controls.Add(btnExit);
 
             // Create main content area
             contentHost = new Panel { Dock = DockStyle.Fill, BackColor = Color.White };
@@ -167,37 +146,6 @@ namespace ST10323395_MunicipalServicesApp
         }
 
         // Button creation methods
-        // Automatically assigns colors based on button type
-        private Button MakeTopButton(string text)
-        {
-            bool close = text.Trim() == "×" || text.Trim().ToLower() == "x";
-            Color baseColor = close ? Color.FromArgb(231, 76, 60) : Color.FromArgb(52, 152, 219);
-            Color hoverColor = close ? Color.FromArgb(192, 57, 43) : Color.FromArgb(41, 128, 185);
-            Color downColor = close ? Color.FromArgb(169, 50, 38) : Color.FromArgb(31, 97, 141);
-            return MakeTopButton(text, baseColor, hoverColor, downColor);
-        }
-
-        private Button MakeTopButton(string text, Color baseColor, Color hoverColor, Color downColor)
-        {
-            var b = new Button
-            {
-                Text = text,
-                Width = 48,
-                Height = 32,
-                FlatStyle = FlatStyle.Flat,
-                BackColor = baseColor,
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 12f, FontStyle.Bold),
-                TabStop = false,
-                Margin = new Padding(0),
-                Padding = new Padding(0)
-            };
-            b.FlatAppearance.BorderSize = 0;
-            b.MouseEnter += (s, e) => b.BackColor = hoverColor;
-            b.MouseLeave += (s, e) => b.BackColor = baseColor;
-            b.MouseDown += (s, e) => { if (e.Button == MouseButtons.Left) b.BackColor = downColor; };
-            return b;
-        }
 
         private Button MakeNavButton(string text)
         {
@@ -266,6 +214,48 @@ namespace ST10323395_MunicipalServicesApp
         {
             contentHost.Controls.Clear();
             var page = new ReportIssueForm
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            contentHost.Controls.Add(page);
+            page.Show();
+        }
+
+        // Open the view issues form
+        private void OpenViewIssuesPage()
+        {
+            contentHost.Controls.Clear();
+            var page = new ViewIssuesForm
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            contentHost.Controls.Add(page);
+            page.Show();
+        }
+
+        // Open the service status form
+        private void OpenServiceStatusPage()
+        {
+            contentHost.Controls.Clear();
+            var page = new ServiceStatusForm
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            contentHost.Controls.Add(page);
+            page.Show();
+        }
+
+        // Open the local events form
+        private void OpenLocalEventsPage()
+        {
+            contentHost.Controls.Clear();
+            var page = new FrmLocalEvents
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
@@ -354,19 +344,6 @@ namespace ST10323395_MunicipalServicesApp
                 e.Graphics.DrawRectangle(pen, r);
         }
 
-        // Window dragging functionality
-        private void TopBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left) NativeDrag();
-        }
-
-        // Enable window dragging by title bar
-        private void NativeDrag()
-        {
-            Capture = false;
-            Message m = Message.Create(Handle, 0xA1, new IntPtr(2), IntPtr.Zero);
-            WndProc(ref m);
-        }
 
         // Utility methods
         private static GraphicsPath Rounded(Rectangle r, int radius)

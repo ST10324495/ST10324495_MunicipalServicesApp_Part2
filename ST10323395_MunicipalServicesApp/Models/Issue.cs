@@ -2,9 +2,7 @@ using System;
 
 namespace ST10323395_MunicipalServicesApp.Models
 {
-    /// <summary>
-    /// Represents a municipal service issue reported by a citizen.
-    /// </summary>
+    // Represents a reported issue
     public class Issue
     {
         public string Location { get; set; }

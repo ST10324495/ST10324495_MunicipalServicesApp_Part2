@@ -1,105 +1,69 @@
 # Municipal Services Portal
 
-A comprehensive Windows Forms application for municipal service issue reporting and community engagement, designed to provide citizens with an intuitive platform for reporting and tracking municipal service problems.
+**Author:** ST10323395  
+**Course:** PROG7312 Portfolio of Evidence (POE)  
+**Version:** 2.0  
+**Date:** 2025
 
-## Overview
+## 📋 Overview
 
-The Municipal Services Portal is a user-friendly C# Windows Forms application that empowers citizens to report municipal service issues efficiently. Built on .NET Framework 4.7.2, the application features a modern, professional interface with gamification elements to encourage user engagement and completion of issue reports. This application serves as Part 1 of the PROG7312 Portfolio of Evidence (POE) and demonstrates modern UI design principles, proper coding standards, and comprehensive form validation.
+The Municipal Services Portal is a comprehensive Windows Forms application designed to empower citizens with an intuitive platform for reporting and tracking municipal service issues. Built on .NET Framework 4.7.2, this application features a modern, professional interface with responsive design and real-time status tracking capabilities.
 
-## Key Features
+## 🚀 Features
 
-### Issue Reporting System
-
-- **Comprehensive Form Interface**: User-friendly form with location, category, description, and media attachment fields
-- **Smart Validation**: Real-time form validation with user-friendly error messages and progress tracking
-- **File Attachment Support**: Optional media attachment capability with 10MB size limit validation
-- **Category Management**: Predefined categories including Sanitation, Roads, Utilities, and Other
-- **Progress Tracking**: Visual progress bar with motivational messages to encourage completion
+### Core Functionality
+- **Issue Reporting**: Comprehensive form with location, category, description, and optional file attachment
+- **Issue Viewing**: DataGridView display of all submitted issues with sorting and filtering
+- **Status Tracking**: Real-time status updates with simulated municipal workflow
+- **Local Events & Announcements**: Advanced event management with data structures and recommendation system
+- **Responsive Design**: Adaptive layout that works on various screen resolutions (1024x768 to 1920x1080+)
 
 ### User Experience
+- **Progress Tracking**: Visual progress bar with motivational messages during issue reporting
+- **File Attachments**: Support for images and documents up to 10MB
+- **Category Management**: 20 predefined categories covering all municipal services
+- **Event Management**: Browse, search, and filter local events and announcements
+- **Recommendation System**: Personalized event recommendations based on search history
+- **Professional UI**: Consistent color scheme and typography throughout
 
-- **Professional Design**: Clean, centered layout with card-based design using modern color schemes
-- **Gamification Elements**: Progress tracking and motivational feedback to enhance user engagement
-- **Responsive Interface**: Fixed-size forms (560x460 pixels) with proper centering and non-resizable design
-- **Accessibility**: Proper AccessibleName properties for screen readers and accessibility compliance
-
-### Data Management
-
+### Technical Features
 - **In-Memory Storage**: Session-based data persistence using static collections
-- **Issue Repository**: Centralized data management with automatic timestamp generation
-- **Data Validation**: Comprehensive validation for all form fields with appropriate error handling
+- **Advanced Data Structures**: Stacks, queues, dictionaries, and sets for efficient data management
+- **Form Validation**: Real-time validation with user-friendly error messages
+- **Responsive Layout**: Proper use of Dock and Anchor properties for scaling
+- **Event-Driven Updates**: Seamless navigation and data refresh between forms
+- **Search & Filter**: Advanced search capabilities with category filtering
 
-## Technical Architecture
-
-### Frontend
-
-- **Platform**: Windows Forms (.NET Framework 4.7.2)
-- **Design**: Professional UI with Segoe UI font and consistent color scheme
-- **Layout**: TableLayoutPanel and FlowLayoutPanel for responsive design
-- **Validation**: Client-side validation with real-time feedback
-
-### Backend
-
-- **Language**: C# 7.0+
-- **Storage**: In-memory static collections for session-based data
-- **Architecture**: Model-Repository pattern for data management
-- **Configuration**: App.config for application settings
-
-### Key Requirements
-
-- Windows 10/11 (recommended)
-- .NET Framework 4.7.2 or later
-- Visual Studio 2017 or later for development
-- Minimum 4GB RAM for optimal performance
-
-## Project Structure
-
-The application follows a modular architecture with clear separation between presentation and data layers:
-
-```
-ST10323395_MunicipalServicesApp/
-├── Models/
-│   ├── Issue.cs                 # Issue data model with XML documentation
-│   └── IssueRepository.cs       # In-memory storage repository
-├── Forms/
-│   ├── MainMenuForm.cs          # Main application interface
-│   └── ReportIssueForm.cs       # Issue reporting form with validation
-├── Properties/
-│   ├── AssemblyInfo.cs         # Assembly metadata
-│   ├── Resources.Designer.cs   # Resource management
-│   └── Settings.Designer.cs    # Application settings
-├── Program.cs                   # Application entry point
-├── App.config                   # Application configuration
-└── ST10323395_MunicipalServicesApp.csproj  # Project file
-```
-
-### Core Components
-
-- **Main Menu Interface**: Professional navigation hub with enabled/disabled state management
-- **Issue Reporting Form**: Comprehensive form with real-time validation and progress tracking
-- **Data Models**: Well-documented Issue model with automatic timestamp generation
-- **Repository Pattern**: Centralized data management with in-memory storage
-- **Configuration Management**: App.config for application settings and metadata
-
-## Getting Started
+## 🛠️ Setup and Installation
 
 ### Prerequisites
+- **Operating System**: Windows 10/11 (recommended)
+- **Framework**: .NET Framework 4.7.2 or later
+- **Development Environment**: Visual Studio 2017 or later
+- **Hardware**: Minimum 4GB RAM for optimal performance
 
-- Visual Studio 2017 or later for development
-- .NET Framework 4.7.2 or later
-- Windows 10/11 (recommended)
-- Minimum 4GB RAM for optimal performance
+### Installation Steps
 
-### Installation
+1. **Download the Project**
+   ```bash
+   git clone [repository-url]
+   cd ST10323395_MunicipalServicesApp
+   ```
 
-1. **Clone the Repository**: Download or clone the project to your local machine
-2. **Open Visual Studio**: Load the solution file `ST10323395_MunicipalServicesApp.sln`
-3. **Restore Dependencies**: Allow Visual Studio to restore NuGet packages if prompted
-4. **Build the Solution**: Press `Ctrl+Shift+B` or navigate to `Build > Build Solution`
-5. **Run the Application**: Press `F5` or click the "Start" button to launch the application
+2. **Open in Visual Studio**
+   - Launch Visual Studio 2017 or later
+   - Open the solution file: `ST10323395_MunicipalServicesApp.sln`
+   - Allow Visual Studio to restore NuGet packages if prompted
+
+3. **Build the Solution**
+   - Press `Ctrl+Shift+B` or navigate to `Build > Build Solution`
+   - Ensure build completes without errors
+
+4. **Run the Application**
+   - Press `F5` or click the "Start" button
+   - The application will launch with the main menu interface
 
 ### Alternative Command Line Build
-
 ```bash
 # Navigate to project directory
 cd ST10323395_MunicipalServicesApp
@@ -111,116 +75,192 @@ msbuild ST10323395_MunicipalServicesApp.sln /p:Configuration=Debug
 .\ST10323395_MunicipalServicesApp\bin\Debug\ST10323395_MunicipalServicesApp.exe
 ```
 
-## Usage Guide
+## 📖 User Guide
+
+### Getting Started
+1. **Launch Application**: Start the application to access the main menu
+2. **Navigate**: Use the left sidebar to access different features
+3. **Report Issues**: Click "Report Issues" to submit new municipal service problems
+4. **View Reports**: Click "View Reported Issues" to see all submitted issues
+5. **Check Status**: Click "Service Request Status" to track issue progress
+6. **Browse Events**: Click "Local Events and Announcements" to explore community events
+7. **Exit Application**: Click "Exit Application" to close the program
 
 ### Issue Reporting Workflow
-
-1. **Launch Application**: Start the application to access the Main Menu interface
-2. **Navigate to Reporting**: Click "Report Issues" to open the comprehensive reporting form
-3. **Complete Required Fields**:
-   - **Location**: Enter specific address or landmark where the issue occurred
-   - **Category**: Select from predefined options (Sanitation, Roads, Utilities, Other)
+1. **Fill Required Fields**:
+   - **Location**: Enter specific address or landmark
+   - **Category**: Select from predefined options (Sanitation, Roads, Utilities, etc.)
    - **Description**: Provide detailed description of the issue
-4. **Optional Media Attachment**: Click "Attach File" to add supporting photos or documents (10MB limit)
-5. **Monitor Progress**: Watch the progress bar and motivational messages as you complete fields
-6. **Submit Issue**: Click "Submit Issue" when all required fields are validated
-7. **Review Confirmation**: Examine the success message with detailed issue information
-8. **Return to Menu**: Click "Back to Menu" to return to the main interface
+2. **Optional Attachment**: Click "Attach File" to add supporting photos or documents
+3. **Monitor Progress**: Watch the progress bar and motivational messages
+4. **Submit**: Click "Submit Issue" when all required fields are completed
+5. **Confirmation**: Review the success message with issue details
 
-### Form Validation Rules
+### Status Tracking
+- **View Status**: All issues display current status (Submitted, In Progress, Resolved, Under Review)
+- **Update Status**: Click "Update Status" to simulate real-time status changes
+- **Color Coding**: Status indicators use color coding for quick identification
+- **Refresh Data**: Status updates are reflected immediately in the interface
 
-- **Location Field**: Required, cannot be empty or whitespace only
-- **Category Selection**: Must select from predefined dropdown options
-- **Description Field**: Required, cannot be empty or whitespace only
-- **File Attachment**: Optional, but if selected, must be under 10MB size limit
+### Local Events and Announcements
+- **Browse Events**: View all upcoming community events in a responsive DataGridView
+- **Search Events**: Search by title, description, category, or location
+- **Filter by Category**: Use dropdown to filter events by specific categories
+- **Event Details**: Double-click events to view detailed information
+- **Recommendations**: Get personalized event recommendations based on search history
+- **Recent Views**: Track recently viewed events using stack data structure
+- **Registration Info**: View registration requirements and availability status
 
-## Performance and Reliability
+## 🎨 Design Features
 
-- **Form Loading**: Main menu loads instantly with optimized UI rendering
-- **Validation Response**: Real-time validation feedback in under 100ms
-- **File Processing**: Attachment validation and processing in under 2 seconds
-- **Memory Management**: Efficient in-memory storage with automatic cleanup on application exit
-- **Error Handling**: Comprehensive error handling with user-friendly messages
-- **UI Responsiveness**: Smooth progress tracking and motivational message updates
+### Color Scheme
+- **Primary Blue**: #2196F3 (Headers, active elements)
+- **Success Green**: #2ECC71 (Completed actions, positive feedback)
+- **Warning Orange**: #E67E22 (Status updates, attention items)
+- **Dark Navigation**: #2D3546 (Sidebar background)
+- **Light Content**: #ECF0F1 (Main content areas)
 
-## Security and Privacy
+### Typography
+- **Font Family**: Segoe UI (Professional, readable)
+- **Headers**: Bold, 18pt for form titles
+- **Body Text**: Regular, 10pt for content
+- **Labels**: Bold, 10pt for form labels
 
-- **Data Validation**: Client-side and server-side validation for all user inputs
-- **File Security**: Size limit validation and file type checking for attachments
-- **Memory Safety**: Secure in-memory data storage with proper disposal patterns
-- **Input Sanitization**: Protection against malicious input through comprehensive validation
-- **Session Management**: Secure session-based data handling with automatic cleanup
+### Layout Principles
+- **Responsive Design**: Adapts to any window size
+- **Consistent Spacing**: 24px padding, 8px margins
+- **Card-Based Layout**: Clean, modern appearance
+- **Professional Styling**: Rounded corners, subtle shadows
 
-## Marking Rubric Alignment
+## 🔧 Technical Architecture
 
-### Functionality (40%)
-  **Complete Implementation**:
-- Main Menu with proper navigation and state management
-- Report Issue form with all required fields and validation
-- File attachment with size validation and error handling
-- Progress tracking and gamification elements
-- Comprehensive form validation with user-friendly messages
-- Success confirmation with detailed issue information
-- In-memory data storage with proper repository pattern
+### Project Structure
+```
+ST10323395_MunicipalServicesApp/
+├── Forms/
+│   ├── MainMenuForm.cs          # Main application interface with navigation
+│   ├── ReportIssueForm.cs       # Issue reporting with validation
+│   ├── ViewIssuesForm.cs        # Issue display and management
+│   ├── ServiceStatusForm.cs     # Status tracking and updates
+│   ├── FrmLocalEvents.cs        # Local events with data structures
+│   └── LocalEventsForm.cs       # Placeholder form (legacy)
+├── Models/
+│   ├── Event.cs                 # Event data model
+│   ├── EventRepository.cs       # Event data structures and management
+│   ├── Issue.cs                 # Issue data model
+│   └── IssueRepository.cs       # In-memory issue storage
+├── Properties/
+│   └── AssemblyInfo.cs         # Application metadata
+├── Program.cs                   # Application entry point
+└── App.config                   # Configuration settings
+```
 
-### UI Design (30%)
-   **Professional Layout**:
-- Consistent color scheme (#ECF0F1 background, #2980B9 titles, #2ECC71 active buttons, #95A5A6 disabled buttons)
-- Segoe UI font throughout for professional appearance
-- Proper alignment using TableLayoutPanel and FlowLayoutPanel
-- Centered forms with fixed sizing (560x460 pixels)
-- Clean, uncluttered design with adequate spacing
-- Accessibility compliance with proper AccessibleName properties
+### Data Management
+- **Issue Model**: Issue class with properties for location, category, description, attachment, and timestamp
+- **Event Model**: Event class with comprehensive properties for event management
+- **Issue Repository**: Static List<Issue> for session-based storage
+- **Event Repository**: Advanced data structures for event management
+- **Validation**: Client-side validation with real-time feedback
+- **Persistence**: In-memory storage (data cleared on application exit)
 
-### Coding Standards (20%)
- **High-Quality Code**:
-- Comprehensive XML documentation for all classes, methods, and properties
-- Clear, consistent naming conventions (PascalCase for public members, camelCase for private)
-- Proper code organization with Models and Forms folder structure
-- Meaningful comments for complex logic and business rules
-- Professional code style and formatting throughout
+### Advanced Data Structures (Part 2)
+- **SortedList<DateTime, List<Event>>**: Stores events ordered by date (replaces PriorityQueue)
+- **Stack<Event>**: Recently viewed events (LIFO - Last In, First Out)
+- **SortedDictionary<string, List<Event>>**: Events categorized and sorted by category
+- **HashSet<string>**: Unique event categories and dates
+- **Queue<string>**: Recent search terms (FIFO - First In, First Out)
+- **Dictionary<string, List<Event>>**: Related events for recommendation system
 
-### Documentation (10%)
-  **Comprehensive Documentation**:
-- Detailed README with setup and usage instructions
-- Feature descriptions and technical architecture overview
-- Project structure documentation with clear component descriptions
-- Marking rubric alignment documentation
-- Clear installation and run instructions for developers
+### Form Architecture
+- **MainMenuForm**: Navigation hub with responsive sidebar and content area
+- **Child Forms**: Embedded forms that load within the main content area
+- **Event Handling**: Proper event-driven architecture with clean separation of concerns
+- **Responsive Layout**: TableLayoutPanel and Dock properties for scaling
+- **FrmLocalEvents**: Advanced event management with data structures and recommendation system
 
-## Contributing
+## 🐛 Troubleshooting
 
-This project is developed as part of the PROG7312 Portfolio of Evidence (POE). Please refer to the project documentation for detailed implementation guidelines and coding standards.
+### Common Issues
 
-## License
+**Application Won't Start**
+- Ensure .NET Framework 4.7.2 is installed
+- Check that Visual Studio has restored all NuGet packages
+- Verify the solution builds without errors
 
-This project is developed for educational purposes as part of university coursework.
+**UI Doesn't Resize Properly**
+- Ensure the main window is not maximized when testing resize
+- Check that FormBorderStyle is set to Sizable
+- Verify minimum window size is not too large for your screen
 
-## Documentation
+**Forms Don't Load**
+- Ensure all form files are included in the project
+- Check that namespaces are consistent across all files
+- Verify that the project file includes all form references
 
-For detailed technical specifications, API documentation, and implementation guidelines, please refer to the accompanying project documentation and code comments.
+**DataGridView Issues**
+- Ensure AutoSizeColumnsMode is set to Fill
+- Check that FillWeight properties are set for responsive columns
+- Verify that data binding is working correctly
 
-## Future Enhancements
+**File Attachment Problems**
+- Check file size is under 10MB limit
+- Ensure file types are supported (images, documents)
+- Verify file path is accessible
 
-- Database integration for persistent storage and data persistence
-- Local Events and Announcements functionality for community engagement
-- Service Request Status tracking with real-time updates
-- User authentication and profile management system
-- Email notifications and automated status updates
-- Mobile-responsive web version for cross-platform access
-- Advanced reporting and analytics dashboard
-- Integration with municipal management systems
+### Performance Tips
+- **Memory Usage**: Application uses in-memory storage; restart periodically for large datasets
+- **File Attachments**: Large files may slow down the interface
+- **Window Resizing**: Resize smoothly for best performance
 
-## Technical Notes
+## 📸 Screenshots
 
-- **Memory Management**: Issues are stored in a static list and automatically cleared when the application exits
-- **File Handling**: Attachments are validated for size and type but stored as file paths only
-- **Error Handling**: Comprehensive try-catch blocks with user-friendly error messages throughout
-- **Accessibility**: Proper AccessibleName properties for screen readers and accessibility compliance
-- **Performance**: Efficient UI updates with minimal resource usage and optimized rendering
+*Screenshots go here*
+
+### Main Menu Interface
+- Professional navigation sidebar
+- Responsive content area
+- Clean, modern design
+
+### Issue Reporting Form
+- Progress tracking with motivational messages
+- File attachment capability
+- Real-time validation feedback
+
+### Issue Viewing Interface
+- DataGridView with responsive columns
+- Color-coded status indicators
+- Professional table styling
+
+### Status Tracking Page
+- Real-time status updates
+- Color-coded status indicators
+- Update functionality
+
+## 🔮 Future Enhancements
+
+- **Database Integration**: Persistent storage with SQL Server or SQLite
+- **User Authentication**: Login system with user profiles
+- **Email Notifications**: Automated status update notifications
+- **Mobile App**: Cross-platform mobile version
+- **Advanced Reporting**: Analytics and reporting dashboard
+- **Integration**: Connect with municipal management systems
+
+## 📞 Support
+
+**Student Information:**
+- **Student ID**: ST10323395
+- **Course**: PROG7312 Portfolio of Evidence
+- **Institution**: [University Name]
+
+**Technical Support:**
+- Check the troubleshooting section above
+- Ensure all prerequisites are met
+- Verify the application builds successfully
+
+## 📄 License
+
+This project is developed for educational purposes as part of university coursework for PROG7312 Portfolio of Evidence.
 
 ---
 
-**Student Number**: ST10324495 
-**Course**: PROG7312 POE
-**Portfolio Part**: 1  
+**Note**: This application is designed as a demonstration of modern Windows Forms development practices, responsive design principles, and professional UI/UX implementation. All code follows industry standards and best practices for maintainability and scalability.

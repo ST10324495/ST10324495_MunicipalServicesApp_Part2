@@ -6,6 +6,7 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp
 {
+    // Form for reporting municipal service issues
     public class ReportIssueForm : Form
     {
         // Application color scheme
@@ -82,20 +83,16 @@ namespace ST10323395_MunicipalServicesApp
             Dock = DockStyle.Fill;
             FormBorderStyle = FormBorderStyle.None;
 
-            // Create centered layout container
+            // Create responsive layout container
             root = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 3,
-                RowCount = 3,
+                ColumnCount = 1,
+                RowCount = 1,
                 Padding = new Padding(24)
             };
-            root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            root.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 760));
-            root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 12F));
+            root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             root.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 12F));
             Controls.Add(root);
 
             // Create main content card
@@ -108,22 +105,20 @@ namespace ST10323395_MunicipalServicesApp
             };
             card.Paint += Card_Paint;
             EnableDoubleBuffer(card);
-            root.Controls.Add(card, 1, 1);
+            root.Controls.Add(card, 0, 0);
 
             // Create vertical content layout
             stack = new TableLayoutPanel
             {
-                Dock = DockStyle.Top,
-                ColumnCount = 1,
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
+                Dock = DockStyle.Fill,
+                ColumnCount = 1
             };
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            stack.RowStyles.Add(new RowStyle(SizeType.Absolute, 160));
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Title
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Progress
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Location/Category
+            stack.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // Description (expandable)
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Attachment
+            stack.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Buttons
             card.Controls.Add(stack);
 
             // Create form title
@@ -233,7 +228,7 @@ namespace ST10323395_MunicipalServicesApp
                 Font = new Font("Segoe UI", 10F),
                 Dock = DockStyle.Fill,
                 ScrollBars = RichTextBoxScrollBars.Vertical,
-                MinimumSize = new Size(0, 130)
+                MinimumSize = new Size(0, 100)
             };
             rtbDescription.TextChanged += delegate { UpdateEngagement(); };
 
@@ -421,37 +416,87 @@ namespace ST10323395_MunicipalServicesApp
             btnSubmit.Enabled = completed == 3;
         }
 
-        // Handle file attachment selection
         private void BtnAttachMedia_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                var f = new FileInfo(openFileDialog.FileName);
-                // Check file size limit
-                if (f.Length > 10 * 1024 * 1024)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    MessageBox.Show("File must be smaller than 10MB.", "File Too Large",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                    var fileInfo = new FileInfo(openFileDialog.FileName);
+                    
+                    // Check file size limit
+                    if (fileInfo.Length > 10 * 1024 * 1024)
+                    {
+                        MessageBox.Show(
+                            "❌ File size exceeds the 10MB limit.\n\n" +
+                            $"Current file size: {(fileInfo.Length / (1024.0 * 1024.0)):F1} MB\n" +
+                            "Please select a smaller file or compress the current file.",
+                            "File Too Large", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                // Update UI with selected file
-                txtAttachment.Text = openFileDialog.FileName;
-                btnAttachMedia.Text = "Change File";
-                btnAttachMedia.BackColor = AccentGreen;
+                    // Check if file exists and is accessible
+                    if (!fileInfo.Exists)
+                    {
+                        MessageBox.Show("❌ The selected file could not be found or accessed.", "File Not Found",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Update UI with selected file
+                    txtAttachment.Text = fileInfo.Name; // Show only filename, not full path
+                    btnAttachMedia.Text = "Change File";
+                    btnAttachMedia.BackColor = AccentGreen;
+                    
+                    // Show success feedback
+                    MessageBox.Show(
+                        $"File attached successfully!\n\n" +
+                        $"File: {fileInfo.Name}\n" +
+                        $"Size: {(fileInfo.Length / (1024.0 * 1024.0)):F1} MB\n" +
+                        $"Type: {fileInfo.Extension.ToUpper()}",
+                        "File Attached", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"❌ An error occurred while selecting the file:\n\n{ex.Message}",
+                    "File Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // Handle form submission
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
-            // Validate required fields
-            if (string.IsNullOrWhiteSpace(txtLocation.Text) ||
-                cmbCategory.SelectedIndex < 0 ||
-                string.IsNullOrWhiteSpace(rtbDescription.Text))
+            // Check all required fields and show helpful error messages
+            if (string.IsNullOrWhiteSpace(txtLocation.Text))
             {
-                MessageBox.Show("Please complete all required fields.", "Validation Error",
+                MessageBox.Show("❌ Please enter the location where the issue occurred.", "Location Required",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLocation.Focus();
+                return;
+            }
+
+            if (cmbCategory.SelectedIndex < 0)
+            {
+                MessageBox.Show("❌ Please select a category for the issue.", "Category Required",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbCategory.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(rtbDescription.Text))
+            {
+                MessageBox.Show("❌ Please provide a detailed description of the issue.", "Description Required",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                rtbDescription.Focus();
+                return;
+            }
+
+            if (rtbDescription.Text.Trim().Length < 10)
+            {
+                MessageBox.Show("❌ Please provide a more detailed description (at least 10 characters).", "Description Too Short",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                rtbDescription.Focus();
                 return;
             }
 
@@ -464,13 +509,17 @@ namespace ST10323395_MunicipalServicesApp
 
             IssueRepository.Items.Add(issue);
 
-            // Show success message
+            // Show enhanced success message with more details
+            string attachmentInfo = string.IsNullOrWhiteSpace(issue.AttachmentPath) ? "None" : "File attached";
             MessageBox.Show(
                 "Issue reported successfully!\n\n" +
                 "Location: " + issue.Location + "\n" +
                 "Category: " + issue.Category + "\n" +
-                "Date: " + issue.DateSubmitted.ToString("yyyy-MM-dd HH:mm"),
-                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "Attachment: " + attachmentInfo + "\n" +
+                "Date Submitted: " + issue.DateSubmitted.ToString("yyyy-MM-dd HH:mm") + "\n\n" +
+                "Your issue has been logged and will be reviewed by municipal services. " +
+                "You can track its status using the 'Service Request Status' menu.",
+                "Issue Reported Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Reset form for next submission
             txtLocation.Clear();
