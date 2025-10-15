@@ -210,6 +210,7 @@ namespace ST10323395_MunicipalServicesApp.Models
         {
             var recommendations = new List<Event>();
             var recentSearches = GetRecentSearches(10);
+            var recentlyViewed = GetRecentlyViewedEvents(5);
 
             // Analyze search patterns and find related events
             foreach (var search in recentSearches)
@@ -229,25 +230,54 @@ namespace ST10323395_MunicipalServicesApp.Models
                 }
             }
 
-            // If no recommendations from searches, provide popular events as defaults
+            // Add recommendations based on recently viewed events
+            foreach (var viewedEvent in recentlyViewed)
+            {
+                // Find events in the same category as recently viewed events
+                var sameCategoryEvents = GetEventsByCategory(viewedEvent.Category)
+                    .Where(e => e.Id != viewedEvent.Id && e.IsActive && e.EventDate >= DateTime.Now)
+                    .ToList();
+                recommendations.AddRange(sameCategoryEvents);
+
+                // Find events with similar keywords
+                var keywords = ExtractKeywords(viewedEvent);
+                foreach (var keyword in keywords)
+                {
+                    if (RelatedEvents.ContainsKey(keyword))
+                    {
+                        var relatedEvents = RelatedEvents[keyword]
+                            .Where(e => e.Id != viewedEvent.Id && e.IsActive && e.EventDate >= DateTime.Now)
+                            .ToList();
+                        recommendations.AddRange(relatedEvents);
+                    }
+                }
+            }
+
+            // If no recommendations from searches or recent views, provide popular events as defaults
             if (recommendations.Count == 0)
             {
                 var allEvents = GetAllEvents()
                     .Where(e => e.IsActive && e.EventDate >= DateTime.Now)
                     .OrderBy(e => e.EventDate)
-                    .Take(3)
+                    .Take(5)
                     .ToList();
                 recommendations.AddRange(allEvents);
             }
 
             // Remove duplicates and return top recommendations
-            return recommendations
+            var finalRecommendations = recommendations
                 .Where(e => e.IsActive && e.EventDate >= DateTime.Now)
                 .GroupBy(e => e.Id)
-                .Select(g => g.First())
-                .OrderBy(e => e.EventDate)
+                .Select(g => new { Event = g.First(), Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .ThenBy(x => x.Event.EventDate)
+                .Select(x => x.Event)
+                .Take(10)
+                .OrderBy(x => (x.Id + DateTime.Now.Minute) % 10)
                 .Take(5)
                 .ToList();
+                
+            return finalRecommendations;
         }
 
         public static List<Event> SearchEvents(string searchTerm)

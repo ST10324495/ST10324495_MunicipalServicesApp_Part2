@@ -38,6 +38,9 @@ namespace ST10323395_MunicipalServicesApp
 
         // Recent views section
         private ListBox lstRecentViews;
+        
+        // Timer for periodic refresh
+        private Timer refreshTimer;
 
         #endregion
 
@@ -63,6 +66,7 @@ namespace ST10323395_MunicipalServicesApp
             LoadEvents();
             LoadRecommendations();
             LoadRecentViews();
+            InitializeRefreshTimer();
         }
         private void InitializeComponent()
         {
@@ -303,6 +307,29 @@ namespace ST10323395_MunicipalServicesApp
             PopulateCategoryFilter();
         }
 
+        private void InitializeRefreshTimer()
+        {
+            refreshTimer = new Timer();
+            refreshTimer.Interval = 30000;
+            refreshTimer.Tick += RefreshTimer_Tick;
+            refreshTimer.Start();
+        }
+
+        private void RefreshTimer_Tick(object sender, EventArgs e)
+        {
+            LoadRecommendations();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            if (refreshTimer != null)
+            {
+                refreshTimer.Stop();
+                refreshTimer.Dispose();
+            }
+            base.OnFormClosed(e);
+        }
+
         private void PopulateCategoryFilter()
         {
             // Clear the dropdown and add "All Categories" option
@@ -339,22 +366,20 @@ namespace ST10323395_MunicipalServicesApp
 
         private void LoadRecommendations()
         {
-            // Get recommended events based on search history
             var recommendations = EventRepository.GetRecommendedEvents();
             
+            lstRecommendations.SuspendLayout();
             lstRecommendations.BeginUpdate();
             lstRecommendations.Items.Clear();
 
             if (recommendations.Count == 0)
             {
-                // Show helpful message when no recommendations
                 lstRecommendations.Items.Add("No recommendations available");
                 lstRecommendations.Items.Add("Search for events to get");
                 lstRecommendations.Items.Add("personalized recommendations");
             }
             else
             {
-                // Display each recommended event
                 foreach (var eventItem in recommendations)
                 {
                     lstRecommendations.Items.Add($"{eventItem.Title} ({eventItem.Category})");
@@ -362,7 +387,25 @@ namespace ST10323395_MunicipalServicesApp
             }
             
             lstRecommendations.EndUpdate();
+            lstRecommendations.ResumeLayout();
+            
             lstRecommendations.Refresh();
+            lstRecommendations.Invalidate();
+            lstRecommendations.Update();
+            
+            if (lstRecommendations.Parent != null)
+            {
+                lstRecommendations.Parent.Invalidate();
+                lstRecommendations.Parent.Update();
+            }
+            
+            this.Invalidate();
+            this.Update();
+        }
+
+        public void RefreshRecommendations()
+        {
+            LoadRecommendations();
         }
 
         private void LoadRecentViews()
@@ -560,6 +603,7 @@ namespace ST10323395_MunicipalServicesApp
             // Show the details in a popup
             MessageBox.Show(details, "Event Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadRecentViews();
+            LoadRecommendations();
         }
 
         private void SetupDataGridView()

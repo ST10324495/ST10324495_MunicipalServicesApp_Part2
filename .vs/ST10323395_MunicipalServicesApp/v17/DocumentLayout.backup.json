@@ -7,32 +7,28 @@
       "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\frmlocalevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\forms\\frmlocalevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\frmlocalevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\forms\\servicestatusform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\servicestatusform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\forms\\servicestatusform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\servicestatusform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\IssueRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Models\\IssueRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\forms\\reportissueform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\reportissueform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\Issue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Models\\Issue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\MainMenuForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Forms\\MainMenuForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\models\\issuerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\models\\issuerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\st10323395_municipalservicesapp\\models\\issue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:st10323395_municipalservicesapp\\models\\issue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\ReportIssueForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C1BDC1A-86E2-4507-A222-E8BC7B576102}|ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp.csproj|solutionrelative:ST10323395_MunicipalServicesApp\\Forms\\ReportIssueForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,8 +38,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs",
+              "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs",
+              "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs",
+              "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Models\\EventRepository.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAgwDIAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T14:48:09.23Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -52,21 +60,10 @@
               "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs",
               "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs",
               "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs",
-              "ViewState": "AgIAAHYCAAAAAAAAAAAQwLECAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-07T19:31:10.41Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FrmLocalEvents.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs",
-              "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs",
-              "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs [Design]",
-              "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Forms\\FrmLocalEvents.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T19:48:45.923Z"
             },
             {
               "$type": "Document",
@@ -83,17 +80,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ServiceStatusForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs",
-              "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs",
-              "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs [Design]",
-              "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Forms\\ServiceStatusForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T17:38:12.584Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "IssueRepository.cs",
               "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\IssueRepository.cs",
               "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Models\\IssueRepository.cs",
@@ -105,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "Issue.cs",
               "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Models\\Issue.cs",
               "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Models\\Issue.cs",
@@ -123,13 +109,13 @@
               "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Forms\\MainMenuForm.cs",
               "ToolTip": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\MainMenuForm.cs",
               "RelativeToolTip": "ST10323395_MunicipalServicesApp\\Forms\\MainMenuForm.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAhwCQAAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwAkBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-09T18:30:41.94Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ReportIssueForm.cs",
               "DocumentMoniker": "C:\\Users\\danie\\source\\repos\\ST10323395_MunicipalServicesApp\\ST10323395_MunicipalServicesApp\\Forms\\ReportIssueForm.cs",
               "RelativeDocumentMoniker": "ST10323395_MunicipalServicesApp\\Forms\\ReportIssueForm.cs",
