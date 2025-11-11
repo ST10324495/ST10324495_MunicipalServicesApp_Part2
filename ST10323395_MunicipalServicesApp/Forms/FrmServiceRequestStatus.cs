@@ -119,19 +119,9 @@ namespace ST10323395_MunicipalServicesApp
                 ColumnCount = 2,
                 RowCount = 1
             };
-            cardLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60f));
-            cardLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40f));
+            cardLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65f));
+            cardLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35f));
             _card.Controls.Add(cardLayout);
-
-            _treeView = new TreeView
-            {
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 10F),
-                BorderStyle = BorderStyle.FixedSingle,
-                HideSelection = false,
-                ShowNodeToolTips = true
-            };
-            cardLayout.Controls.Add(_treeView, 0, 0);
 
             var rightColumn = new TableLayoutPanel
             {
@@ -141,7 +131,17 @@ namespace ST10323395_MunicipalServicesApp
             };
             rightColumn.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             rightColumn.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-            cardLayout.Controls.Add(rightColumn, 1, 0);
+            cardLayout.Controls.Add(rightColumn, 0, 0);
+
+            _treeView = new TreeView
+            {
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 10F),
+                BorderStyle = BorderStyle.FixedSingle,
+                HideSelection = false,
+                ShowNodeToolTips = true
+            };
+            cardLayout.Controls.Add(_treeView, 1, 0);
 
             var searchPanel = new FlowLayoutPanel
             {
@@ -646,7 +646,8 @@ namespace ST10323395_MunicipalServicesApp
                 IntegralHeight = false,
                 Font = new Font("Segoe UI", 9.5f),
                 BackColor = Color.White,
-                Margin = new Padding(4)
+                Margin = new Padding(4),
+                HorizontalScrollbar = true
             };
         }
 
