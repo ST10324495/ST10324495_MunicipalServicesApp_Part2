@@ -132,33 +132,6 @@ The dashboard stitches together custom-built collections and algorithms so munic
 - **Efficiency impact:** Runs in O(V^2) using the custom structures, which is suitable for the small, illustrative dataset.
 - **Example:** The "MST Maintenance Routes" tab lists connections like `Water Services <-> Waste Management (4 km)`, demonstrating how the algorithm minimises total travel cost.
 
----
 
-## 6. Demonstration Checklist for Assessors
-1. **Search workflow:** Enter a title (e.g., "Burst pipe"), observe instant BST lookup, and review the pre-order visualisation tab.
-2. **Priority insights:** Compare the "AVL Priority" and "Max-Heap Top 5" tabs to explain how balanced trees and heaps keep urgent work visible.
-3. **Real-time feed:** Highlight the red-black feed timestamps and colour levels, noting that recolouring maintains balance during continual inserts.
-4. **Graph analytics:** Show BFS vs DFS ordering, then point to the MST tab to discuss route optimisation.
-5. **Tree hierarchy:** Expand the TreeView and summarise how the general tree underpins the structured display.
-
----
-
-## 7. Troubleshooting & Support
-| Issue | Resolution |
-|-------|------------|
-| Build fails with framework errors | Install the .NET 4.7.2 Developer Pack, restart Visual Studio, rebuild. |
-| Application does not launch | Check antivirus quarantine, rebuild the solution, verify dependencies. |
-| Blank Service Request Status form | Ensure `Program.cs` launches `MainMenuForm` and that sample data seeding in `FrmServiceRequestStatus` remains intact. |
-| Graph tabs show no data | Add new connections through `ServiceGraph.AddConnection` or reload the form to reseed the demo graph. |
-
-**Support Contact:** ST10323395 – submit queries via the PROG7312 discussion forum or contact the module coordinator.
-
----
-
-## 8. Future Iterations
-- Persist service requests using SQL Server or SQLite to survive application restarts.
-- Add authentication to separate municipal staff actions from citizen submissions.
-- Extend graph analytics with Dijkstra-style routing to compare optimal vs current maintenance plans.
-- Introduce automated tests that validate tree balancing and heap reprioritisation scenarios.
 
 > *This implementation report is crafted to exceed the rubric requirements by providing detailed compile/run guidance and deep explanations for every data structure powering the Service Request Status feature.*
