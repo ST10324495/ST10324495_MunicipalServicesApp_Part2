@@ -131,7 +131,3 @@ The dashboard stitches together custom-built collections and algorithms so munic
 - **Role in feature:** Simulates the cheapest maintenance routes between departments using weighted edges stored in `ServiceGraph`.
 - **Efficiency impact:** Runs in O(V^2) using the custom structures, which is suitable for the small, illustrative dataset.
 - **Example:** The "MST Maintenance Routes" tab lists connections like `Water Services <-> Waste Management (4 km)`, demonstrating how the algorithm minimises total travel cost.
-
-
-
-> *This implementation report is crafted to exceed the rubric requirements by providing detailed compile/run guidance and deep explanations for every data structure powering the Service Request Status feature.*
