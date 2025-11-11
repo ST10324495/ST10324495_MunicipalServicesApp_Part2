@@ -259,7 +259,7 @@ namespace ST10323395_MunicipalServicesApp
             dgvStatus.Rows.Clear();
 
             // Load issues from repository with random statuses
-            foreach (var issue in IssueRepository.Items)
+            foreach (var issue in IssueRepository.Items.ToArray())
             {
                 string randomStatus = statusOptions[random.Next(statusOptions.Length)];
                 dgvStatus.Rows.Add(

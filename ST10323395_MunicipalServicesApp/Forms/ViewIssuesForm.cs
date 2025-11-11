@@ -235,7 +235,7 @@ namespace ST10323395_MunicipalServicesApp
             dgvIssues.Rows.Clear();
 
             // Load issues from repository
-            foreach (var issue in IssueRepository.Items)
+            foreach (var issue in IssueRepository.Items.ToArray())
             {
                 dgvIssues.Rows.Add(
                     issue.Location,

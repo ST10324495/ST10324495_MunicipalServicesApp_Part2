@@ -53,11 +53,16 @@
     <Compile Include="Forms\ServiceStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FrmServiceRequestStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmLocalEvents.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventRepository.cs" />
+    <Compile Include="Models\ServiceRequestRepository.cs" />
+    <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\IssueRepository.cs" />
     <Compile Include="Program.cs" />
@@ -65,6 +70,19 @@
     <Compile Include="Forms\ReportIssueForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DataStructures\CustomDictionary.cs" />
+    <Compile Include="DataStructures\CustomHashSet.cs" />
+    <Compile Include="DataStructures\CustomList.cs" />
+    <Compile Include="DataStructures\CustomQueue.cs" />
+    <Compile Include="DataStructures\CustomSortedDictionary.cs" />
+    <Compile Include="DataStructures\CustomSortedList.cs" />
+    <Compile Include="DataStructures\CustomStack.cs" />
+    <Compile Include="DataStructures\ServiceRequestTree.cs" />
+    <Compile Include="DataStructures\ServiceRequestAVLTree.cs" />
+    <Compile Include="DataStructures\ServiceRequestHeap.cs" />
+    <Compile Include="DataStructures\ServiceGraph.cs" />
+    <Compile Include="DataStructures\ServiceRequestBST.cs" />
+    <Compile Include="DataStructures\ServiceRequestRedBlackTree.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
+using ST10323395_MunicipalServicesApp.DataStructures;
 using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp
@@ -337,7 +336,8 @@ namespace ST10323395_MunicipalServicesApp
             cmbCategoryFilter.Items.Add("All Categories");
             
             // Add all unique categories from the events
-            foreach (var category in EventRepository.UniqueCategories.OrderBy(c => c))
+            var categories = EventRepository.GetSortedCategories();
+            foreach (var category in categories)
             {
                 cmbCategoryFilter.Items.Add(category);
             }
@@ -349,19 +349,7 @@ namespace ST10323395_MunicipalServicesApp
         {
             // Get all events and populate the table
             var events = EventRepository.GetAllEvents();
-            dgvEvents.Rows.Clear();
-
-            foreach (var eventItem in events)
-            {
-                dgvEvents.Rows.Add(
-                    eventItem.Title,
-                    eventItem.Category,
-                    eventItem.GetFormattedDate(),
-                    eventItem.Location,
-                    eventItem.GetAvailabilityStatus(),
-                    eventItem
-                );
-            }
+            DisplayEvents(events);
         }
 
         private void LoadRecommendations()
@@ -489,9 +477,10 @@ namespace ST10323395_MunicipalServicesApp
             if (lstRecommendations.SelectedIndex >= 0 && lstRecommendations.SelectedItem.ToString() != "No recommendations available")
             {
                 var recommendations = EventRepository.GetRecommendedEvents();
-                if (lstRecommendations.SelectedIndex < recommendations.Count)
+                var recommendationArray = recommendations.ToArray();
+                if (lstRecommendations.SelectedIndex < recommendationArray.Length)
                 {
-                    ShowEventDetails(recommendations[lstRecommendations.SelectedIndex]);
+                    ShowEventDetails(recommendationArray[lstRecommendations.SelectedIndex]);
                 }
             }
         }
@@ -502,9 +491,10 @@ namespace ST10323395_MunicipalServicesApp
             if (lstRecentViews.SelectedIndex >= 0 && lstRecentViews.SelectedItem.ToString() != "No recently viewed events")
             {
                 var recentEvents = EventRepository.GetRecentlyViewedEvents(3);
-                if (lstRecentViews.SelectedIndex < recentEvents.Count)
+                var recentArray = recentEvents.ToArray();
+                if (lstRecentViews.SelectedIndex < recentArray.Length)
                 {
-                    ShowEventDetails(recentEvents[lstRecentViews.SelectedIndex]);
+                    ShowEventDetails(recentArray[lstRecentViews.SelectedIndex]);
                 }
             }
         }
@@ -537,19 +527,29 @@ namespace ST10323395_MunicipalServicesApp
             LoadRecommendations();
         }
 
-        private void ApplyCategoryFilter(List<Event> events)
+        private void ApplyCategoryFilter(CustomList<Event> events)
         {
             // Filter events by selected category if one is chosen
             if (cmbCategoryFilter.SelectedIndex > 0)
             {
                 var selectedCategory = cmbCategoryFilter.SelectedItem.ToString();
-                events = events.Where(e => e.Category == selectedCategory).ToList();
+                var filtered = new CustomList<Event>();
+                foreach (var eventItem in events)
+                {
+                    if (eventItem.Category == selectedCategory)
+                    {
+                        filtered.Add(eventItem);
+                    }
+                }
+
+                DisplayEvents(filtered);
+                return;
             }
 
             DisplayEvents(events);
         }
 
-        private void DisplayEvents(List<Event> events)
+        private void DisplayEvents(CustomList<Event> events)
         {
             // Clear the table and add filtered events
             dgvEvents.Rows.Clear();

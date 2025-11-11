@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using ST10323395_MunicipalServicesApp.DataStructures;
 
 namespace ST10323395_MunicipalServicesApp.Models
 {
@@ -10,25 +9,25 @@ namespace ST10323395_MunicipalServicesApp.Models
         #region Data Structures
 
         // Upcoming events sorted by date
-        public static readonly SortedList<DateTime, List<Event>> UpcomingEvents = new SortedList<DateTime, List<Event>>();
+        public static readonly CustomSortedList<DateTime, CustomList<Event>> UpcomingEvents = new CustomSortedList<DateTime, CustomList<Event>>();
 
         // Recently viewed events (stack)
-        public static readonly Stack<Event> RecentlyViewedEvents = new Stack<Event>();
+        public static readonly CustomStack<Event> RecentlyViewedEvents = new CustomStack<Event>();
 
         // Events organized by category
-        public static readonly SortedDictionary<string, List<Event>> EventsByCategory = new SortedDictionary<string, List<Event>>();
+        public static readonly CustomSortedDictionary<string, CustomList<Event>> EventsByCategory = new CustomSortedDictionary<string, CustomList<Event>>();
 
         // Unique event categories
-        public static readonly HashSet<string> UniqueCategories = new HashSet<string>();
+        public static readonly CustomHashSet<string> UniqueCategories = new CustomHashSet<string>();
 
         // Unique event dates
-        public static readonly HashSet<DateTime> UniqueEventDates = new HashSet<DateTime>();
+        public static readonly CustomHashSet<DateTime> UniqueEventDates = new CustomHashSet<DateTime>();
 
         // Recent search terms (queue)
-        public static readonly Queue<string> RecentSearches = new Queue<string>();
+        public static readonly CustomQueue<string> RecentSearches = new CustomQueue<string>();
 
         // Related events for recommendations
-        public static readonly Dictionary<string, List<Event>> RelatedEvents = new Dictionary<string, List<Event>>();
+        public static readonly CustomDictionary<string, CustomList<Event>> RelatedEvents = new CustomDictionary<string, CustomList<Event>>();
 
         // Counter for unique event IDs
         private static int _nextEventId = 1;
@@ -46,14 +45,14 @@ namespace ST10323395_MunicipalServicesApp.Models
             var eventDate = eventItem.EventDate;
             if (!UpcomingEvents.ContainsKey(eventDate))
             {
-                UpcomingEvents[eventDate] = new List<Event>();
+                UpcomingEvents[eventDate] = new CustomList<Event>();
             }
             UpcomingEvents[eventDate].Add(eventItem);
 
             // Add to category dictionary
             if (!EventsByCategory.ContainsKey(eventItem.Category))
             {
-                EventsByCategory[eventItem.Category] = new List<Event>();
+                EventsByCategory[eventItem.Category] = new CustomList<Event>();
             }
             EventsByCategory[eventItem.Category].Add(eventItem);
 
@@ -69,7 +68,7 @@ namespace ST10323395_MunicipalServicesApp.Models
         public static void AddToRecentlyViewed(Event eventItem)
         {
             // Remove if already exists to avoid duplicates
-            var tempStack = new Stack<Event>();
+            var tempStack = new CustomStack<Event>();
             while (RecentlyViewedEvents.Count > 0)
             {
                 var item = RecentlyViewedEvents.Pop();
@@ -91,15 +90,16 @@ namespace ST10323395_MunicipalServicesApp.Models
             // Limit stack size to prevent memory issues
             if (RecentlyViewedEvents.Count > 10)
             {
-                var limitedStack = new Stack<Event>();
+                var buffer = new Event[10];
+                var index = 0;
                 for (int i = 0; i < 10; i++)
                 {
-                    limitedStack.Push(RecentlyViewedEvents.Pop());
+                    buffer[index++] = RecentlyViewedEvents.Pop();
                 }
                 RecentlyViewedEvents.Clear();
-                while (limitedStack.Count > 0)
+                for (int i = index - 1; i >= 0; i--)
                 {
-                    RecentlyViewedEvents.Push(limitedStack.Pop());
+                    RecentlyViewedEvents.Push(buffer[i]);
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace ST10323395_MunicipalServicesApp.Models
             if (string.IsNullOrWhiteSpace(searchTerm)) return;
 
             // Remove if already exists to avoid duplicates
-            var tempQueue = new Queue<string>();
+            var tempQueue = new CustomQueue<string>();
             while (RecentSearches.Count > 0)
             {
                 var item = RecentSearches.Dequeue();
@@ -131,7 +131,7 @@ namespace ST10323395_MunicipalServicesApp.Models
             // Limit queue size
             if (RecentSearches.Count > 20)
             {
-                var limitedQueue = new Queue<string>();
+                var limitedQueue = new CustomQueue<string>();
                 var items = RecentSearches.ToArray();
                 for (int i = items.Length - 20; i < items.Length; i++)
                 {
@@ -145,32 +145,31 @@ namespace ST10323395_MunicipalServicesApp.Models
             }
         }
 
-        public static List<Event> GetAllEvents()
+        public static CustomList<Event> GetAllEvents()
         {
-            var events = new List<Event>();
+            var events = new CustomList<Event>();
 
-            // Get all events from the sorted list (already ordered by date)
             foreach (var eventList in UpcomingEvents.Values)
             {
                 events.AddRange(eventList);
             }
 
-            return events.OrderBy(e => e.EventDate).ToList();
+            return CreateChronologicalCopy(events);
         }
 
-        public static List<Event> GetEventsByCategory(string category)
+        public static CustomList<Event> GetEventsByCategory(string category)
         {
             if (EventsByCategory.ContainsKey(category))
             {
-                return EventsByCategory[category].OrderBy(e => e.EventDate).ToList();
+                return CreateChronologicalCopy(EventsByCategory[category]);
             }
-            return new List<Event>();
+            return new CustomList<Event>();
         }
 
-        public static List<Event> GetRecentlyViewedEvents(int count = 3)
+        public static CustomList<Event> GetRecentlyViewedEvents(int count = 3)
         {
-            var recentEvents = new List<Event>();
-            var tempStack = new Stack<Event>();
+            var recentEvents = new CustomList<Event>();
+            var tempStack = new CustomStack<Event>();
 
             // Get the top items from the stack
             for (int i = 0; i < count && RecentlyViewedEvents.Count > 0; i++)
@@ -189,10 +188,9 @@ namespace ST10323395_MunicipalServicesApp.Models
             return recentEvents;
         }
 
-        public static List<string> GetRecentSearches(int count = 5)
+        public static CustomList<string> GetRecentSearches(int count = 5)
         {
-            var searches = new List<string>();
-            var tempQueue = new Queue<string>();
+            var searches = new CustomList<string>();
 
             // Get the most recent searches
             var allSearches = RecentSearches.ToArray();
@@ -206,94 +204,72 @@ namespace ST10323395_MunicipalServicesApp.Models
             return searches;
         }
 
-        public static List<Event> GetRecommendedEvents()
+        /// <summary>
+        /// Returns all unique categories sorted alphabetically.
+        /// </summary>
+        /// <remarks>
+        /// Copies set members into a <see cref="CustomList{T}"/> so the UI can bind without touching <c>List&lt;T&gt;</c>.
+        /// </remarks>
+        public static CustomList<string> GetSortedCategories()
         {
-            var recommendations = new List<Event>();
+            var categoryArray = UniqueCategories.ToArray();
+            SortStrings(categoryArray);
+
+            var sorted = new CustomList<string>();
+            for (int i = 0; i < categoryArray.Length; i++)
+            {
+                sorted.Add(categoryArray[i]);
+            }
+
+            return sorted;
+        }
+
+        public static CustomList<Event> GetRecommendedEvents()
+        {
+            var uniqueEvents = new CustomDictionary<int, Event>();
+            var frequency = new CustomDictionary<int, int>();
+
             var recentSearches = GetRecentSearches(10);
             var recentlyViewed = GetRecentlyViewedEvents(5);
 
-            // Analyze search patterns and find related events
-            foreach (var search in recentSearches)
-            {
-                if (RelatedEvents.ContainsKey(search.ToLower()))
-                {
-                    recommendations.AddRange(RelatedEvents[search.ToLower()]);
-                }
+            AddRecommendationsFromSearches(recentSearches, uniqueEvents, frequency);
+            AddRecommendationsFromViewed(recentlyViewed, uniqueEvents, frequency);
 
-                // Also check for category matches
-                foreach (var category in UniqueCategories)
+            if (uniqueEvents.Count == 0)
+            {
+                var fallback = GetAllEvents();
+                foreach (var eventItem in fallback)
                 {
-                    if (category.ToLower().Contains(search.ToLower()) || search.ToLower().Contains(category.ToLower()))
+                    if (!eventItem.IsActive || eventItem.EventDate < DateTime.Now)
                     {
-                        recommendations.AddRange(GetEventsByCategory(category));
+                        continue;
+                    }
+
+                    RegisterCandidate(eventItem, uniqueEvents, frequency, 1);
+                    if (uniqueEvents.Count >= 5)
+                    {
+                        break;
                     }
                 }
             }
 
-            // Add recommendations based on recently viewed events
-            foreach (var viewedEvent in recentlyViewed)
-            {
-                // Find events in the same category as recently viewed events
-                var sameCategoryEvents = GetEventsByCategory(viewedEvent.Category)
-                    .Where(e => e.Id != viewedEvent.Id && e.IsActive && e.EventDate >= DateTime.Now)
-                    .ToList();
-                recommendations.AddRange(sameCategoryEvents);
-
-                // Find events with similar keywords
-                var keywords = ExtractKeywords(viewedEvent);
-                foreach (var keyword in keywords)
-                {
-                    if (RelatedEvents.ContainsKey(keyword))
-                    {
-                        var relatedEvents = RelatedEvents[keyword]
-                            .Where(e => e.Id != viewedEvent.Id && e.IsActive && e.EventDate >= DateTime.Now)
-                            .ToList();
-                        recommendations.AddRange(relatedEvents);
-                    }
-                }
-            }
-
-            // If no recommendations from searches or recent views, provide popular events as defaults
-            if (recommendations.Count == 0)
-            {
-                var allEvents = GetAllEvents()
-                    .Where(e => e.IsActive && e.EventDate >= DateTime.Now)
-                    .OrderBy(e => e.EventDate)
-                    .Take(5)
-                    .ToList();
-                recommendations.AddRange(allEvents);
-            }
-
-            // Remove duplicates and return top recommendations
-            var finalRecommendations = recommendations
-                .Where(e => e.IsActive && e.EventDate >= DateTime.Now)
-                .GroupBy(e => e.Id)
-                .Select(g => new { Event = g.First(), Count = g.Count() })
-                .OrderByDescending(x => x.Count)
-                .ThenBy(x => x.Event.EventDate)
-                .Select(x => x.Event)
-                .Take(10)
-                .OrderBy(x => (x.Id + DateTime.Now.Minute) % 10)
-                .Take(5)
-                .ToList();
-                
-            return finalRecommendations;
+            return BuildOrderedRecommendations(uniqueEvents, frequency, 5);
         }
 
-        public static List<Event> SearchEvents(string searchTerm)
+        public static CustomList<Event> SearchEvents(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return GetAllEvents();
 
-            var searchLower = searchTerm.ToLower();
-            var results = new List<Event>();
+            var searchLower = searchTerm.ToLowerInvariant();
+            var results = new CustomList<Event>();
 
             foreach (var eventItem in GetAllEvents())
             {
-                if (eventItem.Title.ToLower().Contains(searchLower) ||
-                    eventItem.Description.ToLower().Contains(searchLower) ||
-                    eventItem.Category.ToLower().Contains(searchLower) ||
-                    eventItem.Location.ToLower().Contains(searchLower))
+                if (eventItem.Title.ToLowerInvariant().Contains(searchLower) ||
+                    eventItem.Description.ToLowerInvariant().Contains(searchLower) ||
+                    eventItem.Category.ToLowerInvariant().Contains(searchLower) ||
+                    eventItem.Location.ToLowerInvariant().Contains(searchLower))
                 {
                     results.Add(eventItem);
                 }
@@ -302,7 +278,222 @@ namespace ST10323395_MunicipalServicesApp.Models
             // Add search term to recent searches
             AddSearchTerm(searchTerm);
 
-            return results.OrderBy(e => e.EventDate).ToList();
+            return CreateChronologicalCopy(results);
+        }
+
+        #endregion
+
+        #region Recommendation Helpers
+
+        private static void AddRecommendationsFromSearches(CustomList<string> searches, CustomDictionary<int, Event> catalog, CustomDictionary<int, int> frequency)
+        {
+            foreach (var search in searches)
+            {
+                var lowered = search.ToLowerInvariant();
+
+                if (RelatedEvents.ContainsKey(lowered))
+                {
+                    foreach (var related in RelatedEvents[lowered])
+                    {
+                        RegisterCandidate(related, catalog, frequency, 3);
+                    }
+                }
+
+                foreach (var category in UniqueCategories)
+                {
+                    if (CategoryMatchesSearch(category, lowered))
+                    {
+                        var categoryEvents = GetEventsByCategory(category);
+                        foreach (var evt in categoryEvents)
+                        {
+                            RegisterCandidate(evt, catalog, frequency, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void AddRecommendationsFromViewed(CustomList<Event> recentlyViewed, CustomDictionary<int, Event> catalog, CustomDictionary<int, int> frequency)
+        {
+            foreach (var viewed in recentlyViewed)
+            {
+                var sameCategoryEvents = GetEventsByCategory(viewed.Category);
+                foreach (var evt in sameCategoryEvents)
+                {
+                    if (evt.Id == viewed.Id) continue;
+                    RegisterCandidate(evt, catalog, frequency, 2);
+                }
+
+                var keywords = ExtractKeywords(viewed);
+                foreach (var keyword in keywords)
+                {
+                    if (RelatedEvents.ContainsKey(keyword))
+                    {
+                        foreach (var related in RelatedEvents[keyword])
+                        {
+                            if (related.Id == viewed.Id) continue;
+                            RegisterCandidate(related, catalog, frequency, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void RegisterCandidate(Event candidate, CustomDictionary<int, Event> catalog, CustomDictionary<int, int> frequency, int weight)
+        {
+            if (candidate == null)
+            {
+                return;
+            }
+
+            if (!candidate.IsActive || candidate.EventDate < DateTime.Now)
+            {
+                return;
+            }
+
+            if (catalog.ContainsKey(candidate.Id))
+            {
+                catalog[candidate.Id] = candidate;
+            }
+            else
+            {
+                catalog.Add(candidate.Id, candidate);
+            }
+
+            IncrementScore(frequency, candidate.Id, weight);
+        }
+
+        private static void IncrementScore(CustomDictionary<int, int> frequency, int eventId, int weight)
+        {
+            if (frequency.ContainsKey(eventId))
+            {
+                frequency[eventId] = frequency[eventId] + weight;
+            }
+            else
+            {
+                frequency.Add(eventId, weight);
+            }
+        }
+
+        private static int GetScore(CustomDictionary<int, int> frequency, int eventId)
+        {
+            return frequency.TryGetValue(eventId, out var value) ? value : 0;
+        }
+
+        private static CustomList<Event> BuildOrderedRecommendations(CustomDictionary<int, Event> catalog, CustomDictionary<int, int> frequency, int maxCount)
+        {
+            var total = catalog.Count;
+            var ids = new int[total];
+            var events = new Event[total];
+
+            int index = 0;
+            foreach (var pair in catalog)
+            {
+                ids[index] = pair.Key;
+                events[index] = pair.Value;
+                index++;
+            }
+
+            for (int i = 0; i < total - 1; i++)
+            {
+                int best = i;
+                for (int j = i + 1; j < total; j++)
+                {
+                    int currentScore = GetScore(frequency, ids[j]);
+                    int bestScore = GetScore(frequency, ids[best]);
+
+                    if (currentScore > bestScore ||
+                        (currentScore == bestScore && events[j].EventDate < events[best].EventDate))
+                    {
+                        best = j;
+                    }
+                }
+
+                if (best != i)
+                {
+                    Swap(ids, events, i, best);
+                }
+            }
+
+            var result = new CustomList<Event>();
+            int limit = maxCount <= 0 || maxCount > total ? total : maxCount;
+            for (int i = 0; i < limit; i++)
+            {
+                result.Add(events[i]);
+            }
+
+            return result;
+        }
+
+        private static void Swap(int[] ids, Event[] events, int first, int second)
+        {
+            var idTemp = ids[first];
+            ids[first] = ids[second];
+            ids[second] = idTemp;
+
+            var eventTemp = events[first];
+            events[first] = events[second];
+            events[second] = eventTemp;
+        }
+
+        private static bool CategoryMatchesSearch(string category, string searchLower)
+        {
+            if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(searchLower))
+            {
+                return false;
+            }
+
+            var categoryLower = category.ToLowerInvariant();
+            return categoryLower.IndexOf(searchLower, StringComparison.Ordinal) >= 0 ||
+                   searchLower.IndexOf(categoryLower, StringComparison.Ordinal) >= 0;
+        }
+
+        private static CustomList<Event> CreateChronologicalCopy(CustomList<Event> source)
+        {
+            var array = source.ToArray();
+            SortEventsByDate(array);
+
+            var sorted = new CustomList<Event>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                sorted.Add(array[i]);
+            }
+
+            return sorted;
+        }
+
+        private static void SortEventsByDate(Event[] items)
+        {
+            for (int i = 1; i < items.Length; i++)
+            {
+                var key = items[i];
+                int j = i - 1;
+
+                while (j >= 0 && items[j].EventDate > key.EventDate)
+                {
+                    items[j + 1] = items[j];
+                    j--;
+                }
+
+                items[j + 1] = key;
+            }
+        }
+
+        private static void SortStrings(string[] items)
+        {
+            for (int i = 1; i < items.Length; i++)
+            {
+                var key = items[i];
+                int j = i - 1;
+
+                while (j >= 0 && string.Compare(items[j], key, StringComparison.OrdinalIgnoreCase) > 0)
+                {
+                    items[j + 1] = items[j];
+                    j--;
+                }
+
+                items[j + 1] = key;
+            }
         }
 
         #endregion
@@ -317,25 +508,37 @@ namespace ST10323395_MunicipalServicesApp.Models
             {
                 if (!RelatedEvents.ContainsKey(keyword))
                 {
-                    RelatedEvents[keyword] = new List<Event>();
+                    RelatedEvents[keyword] = new CustomList<Event>();
                 }
-                
-                if (!RelatedEvents[keyword].Any(e => e.Id == eventItem.Id))
+
+                var eventGroup = RelatedEvents[keyword];
+                var alreadyTracked = false;
+
+                for (int i = 0; i < eventGroup.Count; i++)
                 {
-                    RelatedEvents[keyword].Add(eventItem);
+                    if (eventGroup[i].Id == eventItem.Id)
+                    {
+                        alreadyTracked = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyTracked)
+                {
+                    eventGroup.Add(eventItem);
                 }
             }
         }
 
-        private static List<string> ExtractKeywords(Event eventItem)
+        private static CustomList<string> ExtractKeywords(Event eventItem)
         {
-            var keywords = new List<string>();
+            var keywords = new CustomHashSet<string>();
             
             // Add category as keyword
-            keywords.Add(eventItem.Category.ToLower());
+            keywords.Add(eventItem.Category.ToLowerInvariant());
             
             // Extract words from title and description
-            var text = $"{eventItem.Title} {eventItem.Description}".ToLower();
+            var text = $"{eventItem.Title} {eventItem.Description}".ToLowerInvariant();
             var words = text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             
             foreach (var word in words)
@@ -346,7 +549,16 @@ namespace ST10323395_MunicipalServicesApp.Models
                 }
             }
             
-            return keywords.Distinct().ToList();
+            var result = new CustomList<string>();
+            var keywordArray = keywords.ToArray();
+            SortStrings(keywordArray);
+
+            for (int i = 0; i < keywordArray.Length; i++)
+            {
+                result.Add(keywordArray[i]);
+            }
+
+            return result;
         }
 
         public static void InitializeSampleData()
@@ -362,47 +574,47 @@ namespace ST10323395_MunicipalServicesApp.Models
             _nextEventId = 1;
 
             // Add sample events
-            var sampleEvents = new List<Event>
+            var sampleEvents = new CustomList<Event>
             {
-                new Event("Community Garden Workshop", "Learn sustainable gardening techniques and community building", "Education", 
+                new Event("Community Garden Workshop", "Learn sustainable gardening techniques and community building", "Education",
                          DateTime.Now.AddDays(7), "Community Center", "contact@community.org", 0, true), // Full
-                new Event("Summer Sports Festival", "Annual sports competition for all ages", "Sports", 
+                new Event("Summer Sports Festival", "Annual sports competition for all ages", "Sports",
                          DateTime.Now.AddDays(14), "Sports Complex", "sports@municipal.gov", 200, false),
-                new Event("Art Exhibition Opening", "Local artists showcase their latest works", "Arts & Culture", 
+                new Event("Art Exhibition Opening", "Local artists showcase their latest works", "Arts & Culture",
                          DateTime.Now.AddDays(3), "Art Gallery", "gallery@arts.org", 5, true), // Limited spots
-                new Event("Environmental Cleanup Day", "Help clean up local parks and waterways", "Community Service", 
+                new Event("Environmental Cleanup Day", "Help clean up local parks and waterways", "Community Service",
                          DateTime.Now.AddDays(10), "Central Park", "environment@municipal.gov", 100, false),
-                new Event("Technology Workshop", "Introduction to digital skills for seniors", "Education", 
+                new Event("Technology Workshop", "Introduction to digital skills for seniors", "Education",
                          DateTime.Now.AddDays(21), "Library", "tech@library.org", 25, true),
-                new Event("Music Concert in the Park", "Free outdoor concert featuring local bands", "Entertainment", 
+                new Event("Music Concert in the Park", "Free outdoor concert featuring local bands", "Entertainment",
                          DateTime.Now.AddDays(5), "Riverside Park", "music@events.org", 500, false),
-                new Event("Health & Wellness Fair", "Free health screenings and wellness information", "Health", 
+                new Event("Health & Wellness Fair", "Free health screenings and wellness information", "Health",
                          DateTime.Now.AddDays(12), "Health Center", "health@municipal.gov", 150, false),
-                new Event("Book Club Meeting", "Monthly discussion of selected books", "Education", 
+                new Event("Book Club Meeting", "Monthly discussion of selected books", "Education",
                          DateTime.Now.AddDays(28), "Library", "books@library.org", 0, true), // Full
-                new Event("Food Truck Festival", "Local food vendors showcase their best dishes", "Food & Dining", 
+                new Event("Food Truck Festival", "Local food vendors showcase their best dishes", "Food & Dining",
                          DateTime.Now.AddDays(6), "Downtown Square", "food@events.org", 300, false),
-                new Event("Photography Workshop", "Learn basic photography techniques and composition", "Arts & Culture", 
+                new Event("Photography Workshop", "Learn basic photography techniques and composition", "Arts & Culture",
                          DateTime.Now.AddDays(15), "Art Studio", "photo@arts.org", 15, true),
-                new Event("Basketball Tournament", "Community basketball tournament for all skill levels", "Sports", 
+                new Event("Basketball Tournament", "Community basketball tournament for all skill levels", "Sports",
                          DateTime.Now.AddDays(9), "Community Gym", "basketball@sports.org", 80, true),
-                new Event("Science Fair", "Students showcase their science projects and experiments", "Education", 
+                new Event("Science Fair", "Students showcase their science projects and experiments", "Education",
                          DateTime.Now.AddDays(18), "High School", "science@school.edu", 200, false),
-                new Event("Farmers Market", "Fresh local produce and handmade goods", "Community Service", 
+                new Event("Farmers Market", "Fresh local produce and handmade goods", "Community Service",
                          DateTime.Now.AddDays(2), "Market Square", "market@local.org", 500, false),
-                new Event("Yoga in the Park", "Free outdoor yoga session for all levels", "Health", 
+                new Event("Yoga in the Park", "Free outdoor yoga session for all levels", "Health",
                          DateTime.Now.AddDays(4), "Sunset Park", "yoga@wellness.org", 50, false),
-                new Event("Cooking Class", "Learn to cook healthy meals with local ingredients", "Food & Dining", 
+                new Event("Cooking Class", "Learn to cook healthy meals with local ingredients", "Food & Dining",
                          DateTime.Now.AddDays(11), "Community Kitchen", "cooking@food.org", 2, true), // Almost full
-                new Event("Movie Night", "Outdoor screening of family-friendly movies", "Entertainment", 
+                new Event("Movie Night", "Outdoor screening of family-friendly movies", "Entertainment",
                          DateTime.Now.AddDays(8), "Park Amphitheater", "movies@events.org", 400, false),
-                new Event("Volunteer Training", "Training session for community volunteers", "Community Service", 
+                new Event("Volunteer Training", "Training session for community volunteers", "Community Service",
                          DateTime.Now.AddDays(13), "Volunteer Center", "volunteer@community.org", 25, true),
-                new Event("Dance Workshop", "Learn various dance styles from professional instructors", "Arts & Culture", 
+                new Event("Dance Workshop", "Learn various dance styles from professional instructors", "Arts & Culture",
                          DateTime.Now.AddDays(16), "Dance Studio", "dance@arts.org", 20, true),
-                new Event("Cycling Tour", "Guided cycling tour of local landmarks", "Sports", 
+                new Event("Cycling Tour", "Guided cycling tour of local landmarks", "Sports",
                          DateTime.Now.AddDays(20), "Starting Point: City Hall", "cycling@sports.org", 30, true),
-                new Event("Career Fair", "Meet local employers and explore job opportunities", "Education", 
+                new Event("Career Fair", "Meet local employers and explore job opportunities", "Education",
                          DateTime.Now.AddDays(25), "Convention Center", "careers@jobs.org", 300, false)
             };
 

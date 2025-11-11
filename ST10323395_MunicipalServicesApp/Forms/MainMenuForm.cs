@@ -241,7 +241,7 @@ namespace ST10323395_MunicipalServicesApp
         private void OpenServiceStatusPage()
         {
             contentHost.Controls.Clear();
-            var page = new ServiceStatusForm
+            var page = new FrmServiceRequestStatus
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
