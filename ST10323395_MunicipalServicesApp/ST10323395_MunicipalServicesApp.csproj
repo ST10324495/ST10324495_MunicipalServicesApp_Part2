@@ -77,12 +77,12 @@
     <Compile Include="DataStructures\Custom\CustomSortedDictionary.cs" />
     <Compile Include="DataStructures\Custom\CustomSortedList.cs" />
     <Compile Include="DataStructures\Custom\CustomStack.cs" />
-    <Compile Include="DataStructures\ServiceRequestTree.cs" />
-    <Compile Include="DataStructures\ServiceRequestAVLTree.cs" />
-    <Compile Include="DataStructures\ServiceRequestHeap.cs" />
     <Compile Include="DataStructures\Graph\ServiceGraph.cs" />
-    <Compile Include="DataStructures\ServiceRequestBST.cs" />
-    <Compile Include="DataStructures\ServiceRequestRedBlackTree.cs" />
+    <Compile Include="DataStructures\Trees\ServiceRequestAVLTree.cs" />
+    <Compile Include="DataStructures\Trees\ServiceRequestBST.cs" />
+    <Compile Include="DataStructures\Trees\ServiceRequestHeap.cs" />
+    <Compile Include="DataStructures\Trees\ServiceRequestRedBlackTree.cs" />
+    <Compile Include="DataStructures\Trees\ServiceRequestTree.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
