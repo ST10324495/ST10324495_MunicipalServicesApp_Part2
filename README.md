@@ -2,9 +2,7 @@
 
 ## 1. Project Summary
 - **Author:** ST10323395
-- **Module:** PROG7312 Portfolio of Evidence (POE) – Part 3 Task 1
-- **Platform:** .NET Framework 4.7.2, Windows Forms, C#
-- **Purpose:** Provide municipal call centre staff with a unified workspace to capture service requests, monitor status changes, and surface local events while showcasing advanced, custom-built data structures.
+- **Module:** PROG7312 Portfolio of Evidence (POE) 
 
 The application emphasises the **Service Request Status** dashboard, which integrates binary trees, balanced trees, heaps, and graph algorithms to keep municipal data organised, searchable, and responsive during live operations.
 
