@@ -131,4 +131,20 @@ This section is written for the marker who wants to understand *why* each struct
 #### Minimum Spanning Tree (Prim-style)
 - **Role in feature:** Demonstrates how departments could minimise travel time when coordinating maintenance visits, using the weighted edges stored inside `ServiceGraph`.
 - **Why it matters:** Even though the dataset is small, running a Prim-style MST gives the dashboard a concrete optimisation story. Complexity is O(V^2), which is ideal for classrooms and easy to reason about during a demo.
-- **The lived example:** The “MST Maintenance Routes” tab shows lines such as `Water Services ↔ Waste Management (4 km)`. That output isn’t pre-written; it’s produced by the MST routine and appended to the list box as the algorithm runs.
+- **The lived example:** The "MST Maintenance Routes" tab shows lines such as `Water Services ↔ Waste Management (4 km)`. That output isn't pre-written; it's produced by the MST routine and appended to the list box as the algorithm runs.
+
+---
+
+## 6. Updates Based on Feedback: Incorporation of Feedback
+
+Feedback from Part 1 and Part 2 of the Portfolio of Evidence led to significant improvements across the application's user interface and technical architecture.
+
+### Part 1 Feedback and Response
+- **Feedback received:** The main concerns focused on UI consistency and the fact that forms did not resize correctly on different screen sizes, creating a poor user experience across different display configurations.
+- **Implementation changes:** This was addressed by restructuring the layout of all main forms, improving docking and anchoring properties of controls, and ensuring that all forms scale dynamically to accommodate various screen resolutions. The improvements ensure a consistent visual experience regardless of the user's display setup.
+
+### Part 2 Feedback and Response
+- **Feedback received:** The lecturer pointed out that the implementation relied heavily on built-in .NET data structures (such as `List<T>`, `Dictionary<TKey,TValue>`, and `HashSet<T>`) instead of implementing custom data structures from scratch, which was a key requirement of the assignment.
+- **Implementation changes:** For Part 3, all major data structures were completely rebuilt as **custom implementations from scratch**, following object-oriented design principles. The rebuilt structures—`ServiceRequestTree`, `ServiceRequestBST`, `ServiceRequestAVLTree`, `ServiceRequestRedBlackTree`, `ServiceRequestHeap`, and `ServiceGraph`—are now fully custom-coded and integrated with the Service Request Status dashboard, demonstrating proper understanding of data structure internals and algorithms.
+
+These improvements have resulted in both enhanced performance characteristics and full compliance with the assignment rubric, delivering a cleaner, more consistent, and technically accurate project that showcases mastery of custom data structure implementation.
