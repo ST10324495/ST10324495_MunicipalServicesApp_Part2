@@ -70,17 +70,17 @@
     <Compile Include="Forms\ReportIssueForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataStructures\CustomDictionary.cs" />
-    <Compile Include="DataStructures\CustomHashSet.cs" />
-    <Compile Include="DataStructures\CustomList.cs" />
-    <Compile Include="DataStructures\CustomQueue.cs" />
-    <Compile Include="DataStructures\CustomSortedDictionary.cs" />
-    <Compile Include="DataStructures\CustomSortedList.cs" />
-    <Compile Include="DataStructures\CustomStack.cs" />
+    <Compile Include="DataStructures\Custom\CustomDictionary.cs" />
+    <Compile Include="DataStructures\Custom\CustomHashSet.cs" />
+    <Compile Include="DataStructures\Custom\CustomList.cs" />
+    <Compile Include="DataStructures\Custom\CustomQueue.cs" />
+    <Compile Include="DataStructures\Custom\CustomSortedDictionary.cs" />
+    <Compile Include="DataStructures\Custom\CustomSortedList.cs" />
+    <Compile Include="DataStructures\Custom\CustomStack.cs" />
     <Compile Include="DataStructures\ServiceRequestTree.cs" />
     <Compile Include="DataStructures\ServiceRequestAVLTree.cs" />
     <Compile Include="DataStructures\ServiceRequestHeap.cs" />
-    <Compile Include="DataStructures\ServiceGraph.cs" />
+    <Compile Include="DataStructures\Graph\ServiceGraph.cs" />
     <Compile Include="DataStructures\ServiceRequestBST.cs" />
     <Compile Include="DataStructures\ServiceRequestRedBlackTree.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

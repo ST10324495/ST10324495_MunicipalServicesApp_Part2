@@ -6,7 +6,7 @@ namespace ST10323395_MunicipalServicesApp.Models
     public static class IssueRepository
     {
         /// <summary>
-        /// In-memory issue list backed by <see cref="CustomList{T}"/> to satisfy the rubric’s custom collection requirement.
+        /// In-memory issue list backed by <see cref="CustomList{T}"/> so the UI works with the same custom collection semantics as the rest of the app.
         /// </summary>
         /// <remarks>
         /// Stores issues in insertion order inside a growable array so lookups remain O(1) by index and appends amortized O(1).

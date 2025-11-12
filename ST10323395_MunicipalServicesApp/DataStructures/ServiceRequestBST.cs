@@ -3,13 +3,12 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// Binary search tree that organises service requests alphabetically without relying on <c>SortedDictionary</c>.
-    /// </summary>
-    /// <remarks>
-    /// Nodes are connected manually; inserts and searches are O(h) where h is tree height (O(log n) when balanced).
-    /// The structure keeps lookups fast for the service request status form.
-    /// </remarks>
+    // Binary search tree that keeps requests sorted alphabetically by title. When you search, it compares the search term
+    // with each node and goes left (alphabetically earlier) or right (later) until it finds a match. This gives us O(log n) lookups
+    // instead of scanning through everything. The search box on the Service Request Status form uses this, and the "BST Pre-Order Map"
+    // tab shows how the tree branches out when traversed in pre-order.
+    // Used for: Advanced Data Structures, Integration with Interface
+
     public class ServiceRequestBST
     {
         private sealed class Node

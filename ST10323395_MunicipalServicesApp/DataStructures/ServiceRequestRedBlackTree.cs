@@ -3,12 +3,12 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// Lightweight red-black tree keyed by request timestamps so new tickets slot in efficiently without re-scans.
-    /// </summary>
-    /// <remarks>
-    /// The colour property drives near-O(log n) inserts even during rapid municipal spikes, mirroring real-time dashboards.
-    /// </remarks>
+    // Red-Black tree that keeps requests sorted by timestamp (newest first). Each node is colored red or black, and the tree
+    // uses these colors plus rotations to stay balanced. When you insert a new request, it might need to recolor nodes or rotate
+    // to maintain the red-black properties. This keeps inserts fast (O(log n)) even when lots of requests come in at once.
+    // The "RB Real-Time Feed" tab shows the newest requests, and "RB Colour Levels" shows the tree structure with colors visible.
+    // Used for: Advanced Data Structures, Integration with Interface
+
     public class ServiceRequestRedBlackTree
     {
         private sealed class Node

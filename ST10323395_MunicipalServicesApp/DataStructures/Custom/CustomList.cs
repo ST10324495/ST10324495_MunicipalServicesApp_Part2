@@ -134,7 +134,7 @@ namespace ST10323395_MunicipalServicesApp.DataStructures
         /// Removes all elements while keeping the allocated buffer for reuse.
         /// </summary>
         /// <remarks>
-        /// Clearing is O(n) due to the array wipe, but that cost only appears when resetting demo data between rubric checks.
+        /// Clearing is O(n) due to the array wipe, but that cost only appears when resetting demo data between dashboard refreshes.
         /// </remarks>
         public void Clear()
         {

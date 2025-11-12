@@ -3,12 +3,12 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// AVL tree that ranks service requests by priority without leaning on built-in balanced structures.
-    /// </summary>
-    /// <remarks>
-    /// Rotations maintain O(log n) insert and search performance, so urgent municipal tickets bubble up quickly.
-    /// </remarks>
+    // AVL tree that sorts requests by priority. Unlike a regular BST, this one automatically balances itself using rotations
+    // when nodes get too lopsided. Each node tracks its height, and if one side gets more than 1 level taller, it rotates
+    // to fix it. This keeps searches fast (O(log n)) even when priorities are added in a bad order. The "AVL Priority" tab
+    // shows the top 5 most urgent requests pulled from this tree.
+    // Used for: Advanced Data Structures, Integration with Interface
+
     public class ServiceRequestAVLTree
     {
         private sealed class Node

@@ -3,13 +3,11 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// Basic tree that models the municipal department hierarchy without leaning on built-in collections.
-    /// </summary>
-    /// <remarks>
-    /// Each node keeps child references inside a <see cref="CustomList{T}"/> so traversals stay O(n) and inserts O(1).
-    /// The layout feeds directly into the service status form where inspectors visualise departments and their requests.
-    /// </remarks>
+    // This is an n-ary tree that stores the department hierarchy - departments contain subcategories, which contain service requests.
+    // When you add a request, it gets attached to the right department/category node. The tree is then walked to populate the TreeView
+    // on the Service Request Status form, and the "Hierarchy Summary" tab shows the same structure in a text format.
+    // Used for: Advanced Data Structures, Integration with Interface
+
     public class ServiceRequestTree
     {
         /// <summary>

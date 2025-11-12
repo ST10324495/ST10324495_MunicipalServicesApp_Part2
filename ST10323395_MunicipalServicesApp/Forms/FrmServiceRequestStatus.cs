@@ -9,8 +9,7 @@ using WinFormsTreeNode = System.Windows.Forms.TreeNode;
 namespace ST10323395_MunicipalServicesApp
 {
     /// <summary>
-    /// Shows the municipal service hierarchy using our custom tree structure.
-    /// The comments call out how this meets the POE “Basic Tree” requirement.
+    /// Shows the municipal service hierarchy using the custom tree structure that powers the dashboard.
     /// </summary>
     public class FrmServiceRequestStatus : Form
     {

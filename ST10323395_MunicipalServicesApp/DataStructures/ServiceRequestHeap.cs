@@ -4,13 +4,14 @@ using ST10323395_MunicipalServicesApp.Models;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// Max-heap that keeps the most urgent (highest priority) service requests at the top.
-    /// Insert and extract operations run in O(log n), showcasing efficient priority management.
-    /// </summary>
-    /// <remarks>
-    /// Stores requests inside a manually managed array so the rubric still sees a genuine custom structure.
-    /// </remarks>
+    // Max-heap that keeps the highest priority requests at the top. It's stored as an array where the parent is always bigger
+    // than its children. When you insert a request, it bubbles up to the right spot. When you extract the max, it takes the root
+    // and moves the last item up, then bubbles it down. Both operations are O(log n). The "Max-Heap Top 5" tab extracts
+    // the top 5 most urgent requests from this heap.
+    // Used for: Advanced Data Structures, Integration with Interface
+
+    // Stores requests inside a manually managed array to keep priority handling independent of built-in collections.
+
     public class ServiceRequestHeap
     {
         private const int DefaultCapacity = 8;
@@ -136,7 +137,7 @@ namespace ST10323395_MunicipalServicesApp.DataStructures
         /// Updates a request's priority in-place and rebalances the heap accordingly.
         /// </summary>
         /// <remarks>
-        /// Performs an O(n) scan to locate the ticket, then an O(log n) sift. Fits rubric requirements without native containers.
+        /// Performs an O(n) scan to locate the ticket, then an O(log n) sift while staying within the custom heap implementation.
         /// </remarks>
         public bool UpdatePriority(string requestId, int newPriority)
         {

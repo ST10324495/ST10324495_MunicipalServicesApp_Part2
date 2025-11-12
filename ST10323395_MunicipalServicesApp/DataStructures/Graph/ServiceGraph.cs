@@ -2,13 +2,14 @@ using System;
 
 namespace ST10323395_MunicipalServicesApp.DataStructures
 {
-    /// <summary>
-    /// Lightweight graph backed by custom collections to model relationships between departments, staff, and requests.
-    /// </summary>
-    /// <remarks>
-    /// Stores adjacency lists inside <see cref="CustomList{T}"/> instances and tracks nodes with <see cref="CustomDictionary{TKey,TValue}"/>.
-    /// Breadth-first traversal stays O(V + E), making it ideal for demonstrating relationship walkthroughs in the rubric.
-    /// </remarks>
+    // Graph that connects departments, staff, and requests. Each node has a list of neighbors (adjacency list). BFS uses a queue
+    // to visit nodes level by level, while DFS uses a stack to go deep into one branch before backtracking. The MST (Minimum
+    // Spanning Tree) uses Prim's algorithm to find the cheapest way to connect all departments. All traversals are O(V + E).
+    // The Service Request Status form has tabs showing BFS results, DFS paths, and the MST routes between departments.
+    // Used for: Advanced Data Structures, Integration with Interface
+
+    // Breadth-first traversal stays O(V + E), giving operators a quick way to explore relationships between services.
+
     public class ServiceGraph
     {
         private class GraphNode

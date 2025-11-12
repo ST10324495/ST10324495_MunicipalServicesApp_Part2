@@ -7,7 +7,7 @@ namespace ST10323395_MunicipalServicesApp.Models
     /// Central store for service requests. Uses the BST to keep lookups fast (O(log n) vs O(n)).
     /// </summary>
     /// <remarks>
-    /// Every collection inside this repository is a custom structure so the rubric requirement is met end-to-end.
+    /// Every collection inside this repository relies on the custom data structures so the behaviours stay consistent across the app.
     /// </remarks>
     public class ServiceRequestRepository
     {

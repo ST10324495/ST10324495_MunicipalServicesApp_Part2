@@ -88,7 +88,7 @@ namespace ST10323395_MunicipalServicesApp.DataStructures
         /// Removes every item while keeping the allocated buffer for reuse.
         /// </summary>
         /// <remarks>
-        /// Clearing runs in O(n) because it wipes the array, but this only happens when reloading demo scenarios between rubric checks.
+        /// Clearing runs in O(n) because it wipes the array, but this only happens when reloading demo scenarios or resetting the stack.
         /// </remarks>
         public void Clear()
         {
